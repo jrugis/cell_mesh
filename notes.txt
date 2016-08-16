@@ -1,0 +1,10 @@
+
+http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2805160/
+http://www.cgal.org/
+http://cvcweb.ices.utexas.edu/cvcwp/
+http://imagej.net/TrakEM2
+
+fiji
+  Profile - for cells
+  Treeline or AreaTree - for lumen
+
