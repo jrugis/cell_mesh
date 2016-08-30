@@ -13,20 +13,21 @@ f1.close()
 xsize = images.shape[1]     # side dimension of images
 ysize = images.shape[2]
 
-# replace grey-scale values with cell number
+# replace grey-scale values with cell number (for easy identifucation and indexing)
+# NOTE: hard-coded values !!!
 d = {"0":0, "139":4, "162":2, "175":3, "201":7, "208":6, "222":1, "234":5}
 for v in np.nditer(images,  op_flags=['readwrite']):
   v[...] = d[str(v)]
 
-# add top and bottom empty padding layers
+# add top and bottom empty padding layers (for full surround with empty space)
 temp = np.zeros((1, xsize, ysize), dtype=np.uint8)
 images = np.concatenate((temp, images, temp))
 zsize = images.shape[0]
 print images.shape
 
-# check cell adjacency
+# probe cell adjacency
 cnts = np.zeros((8, 8), dtype=np.uint16) # adjacency counts matrix
-vals = np.zeros((7), dtype=np.uint8)  # voxel neighbor values
+vals = np.zeros((7), dtype=np.uint8)  # temp: voxel neighbor values
 cvs = np.unique(images)
 for cv in cvs[1:]:
   xyz = np.where(images == cv)
