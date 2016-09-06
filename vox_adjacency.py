@@ -1,10 +1,77 @@
-#!/bin/bash
+#!/usr/bin/python
 
 import numpy as np
 import libtiff as tf
 
 fdir = "layers/"
 fname = "cellsNR"
+
+def write_msh(xsize, ysize, zsize, quads):
+  qsize = quads.shape
+  f1 = open("bounding.msh", "w")
+  f1.write("$MeshFormat\n")
+  f1.write("2.2 0 8\n")
+  f1.write("$EndMeshFormat\n")
+
+  f1.write("$Nodes\n")
+  f1.write(str(qsize[0] * qsize[1]) + '\n')
+  for i in range(qsize[0]):
+    for j in range(4):
+      f1.write(str(i*4 + j + 1))
+      #for k in range(3):
+      #  f1.write(' ' + str(quads[i, j, k]))
+      f1.write(' ' + str((quads[i, j, 0] * 70.66 / xsize) - (70.66 / 2)))
+      f1.write(' ' + str((70.66 / 2) - (quads[i, j, 1] * 70.66 / xsize)))
+      f1.write(' ' + str((24.73 / 2) - ((quads[i, j, 2] + 1) * 24.73 / zsize)))
+      f1.write('\n')
+  f1.write("$EndNodes\n")
+
+  f1.write("$Elements\n")
+  f1.write(str(qsize[0]) + '\n')
+  for i in range(qsize[0]):
+    f1.write(str(i + 1))
+    f1.write(" 3 2 101 100")
+    for j in range(4):
+      f1.write(' ' + str(i*4 + j + 1))
+    f1.write('\n')
+  f1.write("$EndElements\n")
+
+  f1.close()
+  return
+
+def get_quad(j, x, y, z):
+  quad = np.zeros((4, 3), dtype=np.uint8)
+  if j==1:   # right
+    quad[0] = (x+1, y  , z  )
+    quad[1] = (x+1, y+1, z  )
+    quad[2] = (x+1, y+1, z+1)
+    quad[3] = (x+1, y  , z+1)
+  elif j==2: # left
+    quad[0] = (x  , y+1, z  )
+    quad[1] = (x  , y  , z  )
+    quad[2] = (x  , y  , z+1)
+    quad[3] = (x  , y+1, z+1)
+  elif j==3: # back
+    quad[0] = (x+1, y+1, z  )
+    quad[1] = (x  , y+1, z  )
+    quad[2] = (x  , y+1, z+1)
+    quad[3] = (x+1, y+1, z+1)
+  elif j==4: # front
+    quad[0] = (x  , y  , z  )
+    quad[1] = (x+1, y  , z  )
+    quad[2] = (x+1, y  , z+1)
+    quad[3] = (x  , y  , z+1)
+  elif j==5: # top
+    quad[0] = (x  , y  , z+1)
+    quad[1] = (x+1, y  , z+1)
+    quad[2] = (x+1, y+1, z+1)
+    quad[3] = (x  , y+1, z+1)
+  elif j==6: # bottom
+    quad[0] = (x  , y+1, z  )
+    quad[1] = (x+1, y+1, z  )
+    quad[2] = (x+1, y  , z  )
+    quad[3] = (x  , y  , z  )
+  return quad
 
 # get the reduced image stack
 f1 = tf.TIFF3D.open(fdir+fname+".tif", mode='r') 
@@ -26,14 +93,17 @@ zsize = images.shape[0]
 print images.shape
 
 # probe cell adjacency
+#  and create list of bounding surface quads
+quads = np.zeros((xsize*ysize, 4, 3), dtype=np.uint16) # hopefully this empty list is long enough!!! 
+qcnt = 0 # the total number of surface quads
 cnts = np.zeros((8, 8), dtype=np.uint16) # adjacency counts matrix
 vals = np.zeros((7), dtype=np.uint8)  # temp: voxel neighbor values
 cvs = np.unique(images)
 for cv in cvs[1:]:
   xyz = np.where(images == cv)
   z = xyz[0]
-  x = xyz[2]
   y = xyz[1]
+  x = xyz[2]
   print cv, x.shape[0]
   for i in range(x.shape[0]):
     vals[0] = images[z[i]  , y[i]  , x[i]  ]
@@ -46,8 +116,12 @@ for cv in cvs[1:]:
     for j in range(1, vals.shape[0]):
       if vals[j] != vals[0]:
         cnts[vals[0], vals[j]] += 1
+        if vals[j] == 0: # outer boundry?
+          quads[qcnt] = get_quad(j, x[i], y[i], z[i])
+          qcnt += 1
 
 print cnts[1:] # adjacency matrix
+#print np.sum(cnts, axis=0)[0], qcnt
 
-
+write_msh(xsize, ysize, zsize, quads[0:qcnt]) # save the bounding mesh
 
