@@ -5,7 +5,7 @@ import libtiff as tf
 from pyevtk.hl import pointsToVTK
 
 fdir = "layers/"
-fname = "cellsNR"
+fname = "cellsN8R"
 
 f1 = tf.TIFF3D.open(fdir+fname+".tif", mode='r') 
 images = f1.read_image()    # load the image stack
