@@ -4,7 +4,7 @@ import numpy as np
 import libtiff as tf
 
 fdir = "layers/"
-fname = "cellsNR"
+fname = "cellsN8R"
 
 def write_msh(xsize, ysize, zsize, quads):
   qsize = quads.shape
@@ -90,7 +90,8 @@ for v in np.nditer(images,  op_flags=['readwrite']):
 temp = np.zeros((1, xsize, ysize), dtype=np.uint8)
 images = np.concatenate((temp, images, temp))
 zsize = images.shape[0]
-print images.shape
+print "\nvoxel grid:"
+print ' ', images.shape
 
 # probe cell adjacency
 #  and create list of bounding surface quads
@@ -99,12 +100,13 @@ qcnt = 0 # the total number of surface quads
 cnts = np.zeros((8, 8), dtype=np.uint16) # adjacency counts matrix
 vals = np.zeros((7), dtype=np.uint8)  # temp: voxel neighbor values
 cvs = np.unique(images)
+print "\ncell voxel counts:"
 for cv in cvs[1:]:
   xyz = np.where(images == cv)
   z = xyz[0]
   y = xyz[1]
   x = xyz[2]
-  print cv, x.shape[0]
+  print ' ', cv, x.shape[0]
   for i in range(x.shape[0]):
     vals[0] = images[z[i]  , y[i]  , x[i]  ]
     vals[1] = images[z[i]  , y[i]  , x[i]+1]
@@ -120,7 +122,8 @@ for cv in cvs[1:]:
           quads[qcnt] = get_quad(j, x[i], y[i], z[i])
           qcnt += 1
 
-print cnts[1:] # adjacency matrix
+print "\ncell voxel face adjacency counts:"
+print cnts[1:], '\n' # adjacency matrix
 #print np.sum(cnts, axis=0)[0], qcnt
 
 write_msh(xsize, ysize, zsize, quads[0:qcnt]) # save the bounding mesh

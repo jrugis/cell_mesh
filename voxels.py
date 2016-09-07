@@ -26,7 +26,7 @@ print images.shape
 
 icount = images.shape[0]    # image count in stack
 isize = images.shape[1]     # side dimension of images
-bsize = 8                   # decimation block size, MUST DIVIDE isize !!!
+bsize = 2                   # decimation block size, MUST DIVIDE isize !!!
 bcount = isize / bsize      # side dimension of reduced images
 imagesR = np.zeros((icount, bcount, bcount), dtype=np.uint8) # reduced images array
 print imagesR.shape
@@ -39,7 +39,7 @@ for c in range(icount):     # reduce each image
 print np.unique(images)
 print np.unique(imagesR)
 
-f2 = tf.TIFF3D.open(fdir+fname+"R.tif", mode='w')
+f2 = tf.TIFF3D.open(fdir+fname+str(bsize)+"R.tif", mode='w')
 f2.write_image(imagesR)     # save the reduced image stack
 f2.close()
 

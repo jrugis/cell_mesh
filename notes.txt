@@ -1,13 +1,4 @@
 
-http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2805160/
-http://www.cgal.org/
-http://cvcweb.ices.utexas.edu/cvcwp/
-http://imagej.net/TrakEM2
-
-fiji
-  Profile - for cells
-  Treeline or AreaTree - for lumen
-
 **********************************************
 **********************************************
 WORKFLOW
@@ -21,18 +12,18 @@ bash: combine segmented layers into tiff stacK
   -> layers/cells.tif, layers/cellsN.tif
 
 python: reduce image stack (and check for errors)
-  python voxels.py
-  -> layers/cellsNR.tif
+  python voxels.py <- layers/cellsN.tif
+  -> layers/cellsNxR.tif
 
 python: (testing) convert reduced image stack to vtk's for ParaView
-  python vox2vtk.py
-  -> layers/cellsNRxxx.vtu
+  python vox2vtk.py <- layers/cellsNxR.tif
+  -> layers/cellsNxRxxx.vtu
 
 paraview: (testing) view files
-  check_xx.pvsm
+  layers/check_xx.pvsm
 
 python: check adjacency and create quad boundry mesh
-  python vox_adjacency.py <- layers/cellsNR.tif
+  python vox_adjacency.py <- layers/cellsNxR.tif
   -> bounding.msh
 
 gmsh: convert quad bounding mesh to stl format
@@ -49,6 +40,24 @@ gmsh: create the 3D mesh
 gmsh: view the 3D mesh
   gmsh remesh.msh
 
+python: extract topology
+  python vox_topology.py
+  -> topology/cellsNxR.vtu
+
+paraview: (testing) view topology
+  topology/topology_00.pvsm
+
+
 **********************************************
 **********************************************
+
+http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2805160/
+http://www.cgal.org/
+http://cvcweb.ices.utexas.edu/cvcwp/
+http://imagej.net/TrakEM2
+
+fiji
+  Profile - for cells
+  Treeline or AreaTree - for lumen
+
 

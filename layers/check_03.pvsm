@@ -7462,9 +7462,7 @@
       </Property>
       <Property name="SelectionPointFieldDataArrayName" id="6372.SelectionPointFieldDataArrayName" number_of_elements="1">
         <Element index="0" value="null"/>
-        <Domain name="array_list" id="6372.SelectionPointFieldDataArrayName.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6372.SelectionPointFieldDataArrayName.array_list"/>
       </Property>
       <Property name="SelectionVisibility" id="6372.SelectionVisibility" number_of_elements="1">
         <Element index="0" value="1"/>
@@ -7531,9 +7529,7 @@
         <Element index="2" value=""/>
         <Element index="3" value=""/>
         <Element index="4" value=""/>
-        <Domain name="array_list" id="6372.ColorArrayName.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6372.ColorArrayName.array_list"/>
         <Domain name="field_list" id="6372.ColorArrayName.field_list">
           <Entry value="0" text="Point Data"/>
           <Entry value="1" text="Cell Data"/>
@@ -7623,9 +7619,7 @@
       </Property>
       <Property name="OSPRayScaleArray" id="6372.OSPRayScaleArray" number_of_elements="1">
         <Element index="0" value="null"/>
-        <Domain name="array_list" id="6372.OSPRayScaleArray.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6372.OSPRayScaleArray.array_list"/>
       </Property>
       <Property name="OSPRayScaleFunction" id="6372.OSPRayScaleFunction" number_of_elements="1">
         <Proxy value="6310"/>
@@ -7648,9 +7642,7 @@
         <Element index="2" value=""/>
         <Element index="3" value="0"/>
         <Element index="4" value="null"/>
-        <Domain name="array_list" id="6372.OpacityArray.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6372.OpacityArray.array_list"/>
       </Property>
       <Property name="OpacityByArray" id="6372.OpacityByArray" number_of_elements="1">
         <Element index="0" value="0"/>
@@ -7893,9 +7885,7 @@
         <Element index="2" value=""/>
         <Element index="3" value="0"/>
         <Element index="4" value="null"/>
-        <Domain name="array_list" id="6372.SetScaleArray.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6372.SetScaleArray.array_list"/>
       </Property>
       <Property name="ShaderPreset" id="6372.ShaderPreset" number_of_elements="1">
         <Element index="0" value="1"/>
@@ -7992,9 +7982,7 @@
       </Property>
       <Property name="SelectionPointFieldDataArrayName" id="6544.SelectionPointFieldDataArrayName" number_of_elements="1">
         <Element index="0" value="null"/>
-        <Domain name="array_list" id="6544.SelectionPointFieldDataArrayName.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6544.SelectionPointFieldDataArrayName.array_list"/>
       </Property>
       <Property name="SelectionVisibility" id="6544.SelectionVisibility" number_of_elements="1">
         <Element index="0" value="1"/>
@@ -8061,9 +8049,7 @@
         <Element index="2" value=""/>
         <Element index="3" value=""/>
         <Element index="4" value=""/>
-        <Domain name="array_list" id="6544.ColorArrayName.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6544.ColorArrayName.array_list"/>
         <Domain name="field_list" id="6544.ColorArrayName.field_list">
           <Entry value="0" text="Point Data"/>
           <Entry value="1" text="Cell Data"/>
@@ -8153,9 +8139,7 @@
       </Property>
       <Property name="OSPRayScaleArray" id="6544.OSPRayScaleArray" number_of_elements="1">
         <Element index="0" value="null"/>
-        <Domain name="array_list" id="6544.OSPRayScaleArray.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6544.OSPRayScaleArray.array_list"/>
       </Property>
       <Property name="OSPRayScaleFunction" id="6544.OSPRayScaleFunction" number_of_elements="1">
         <Proxy value="6482"/>
@@ -8178,9 +8162,7 @@
         <Element index="2" value=""/>
         <Element index="3" value="0"/>
         <Element index="4" value="null"/>
-        <Domain name="array_list" id="6544.OpacityArray.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6544.OpacityArray.array_list"/>
       </Property>
       <Property name="OpacityByArray" id="6544.OpacityByArray" number_of_elements="1">
         <Element index="0" value="0"/>
@@ -8423,9 +8405,7 @@
         <Element index="2" value=""/>
         <Element index="3" value="0"/>
         <Element index="4" value="null"/>
-        <Domain name="array_list" id="6544.SetScaleArray.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6544.SetScaleArray.array_list"/>
       </Property>
       <Property name="ShaderPreset" id="6544.ShaderPreset" number_of_elements="1">
         <Element index="0" value="1"/>
@@ -8522,9 +8502,7 @@
       </Property>
       <Property name="SelectionPointFieldDataArrayName" id="6716.SelectionPointFieldDataArrayName" number_of_elements="1">
         <Element index="0" value="null"/>
-        <Domain name="array_list" id="6716.SelectionPointFieldDataArrayName.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6716.SelectionPointFieldDataArrayName.array_list"/>
       </Property>
       <Property name="SelectionVisibility" id="6716.SelectionVisibility" number_of_elements="1">
         <Element index="0" value="1"/>
@@ -8591,9 +8569,7 @@
         <Element index="2" value=""/>
         <Element index="3" value=""/>
         <Element index="4" value=""/>
-        <Domain name="array_list" id="6716.ColorArrayName.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6716.ColorArrayName.array_list"/>
         <Domain name="field_list" id="6716.ColorArrayName.field_list">
           <Entry value="0" text="Point Data"/>
           <Entry value="1" text="Cell Data"/>
@@ -8683,9 +8659,7 @@
       </Property>
       <Property name="OSPRayScaleArray" id="6716.OSPRayScaleArray" number_of_elements="1">
         <Element index="0" value="null"/>
-        <Domain name="array_list" id="6716.OSPRayScaleArray.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6716.OSPRayScaleArray.array_list"/>
       </Property>
       <Property name="OSPRayScaleFunction" id="6716.OSPRayScaleFunction" number_of_elements="1">
         <Proxy value="6654"/>
@@ -8708,9 +8682,7 @@
         <Element index="2" value=""/>
         <Element index="3" value="0"/>
         <Element index="4" value="null"/>
-        <Domain name="array_list" id="6716.OpacityArray.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6716.OpacityArray.array_list"/>
       </Property>
       <Property name="OpacityByArray" id="6716.OpacityByArray" number_of_elements="1">
         <Element index="0" value="0"/>
@@ -8953,9 +8925,7 @@
         <Element index="2" value=""/>
         <Element index="3" value="0"/>
         <Element index="4" value="null"/>
-        <Domain name="array_list" id="6716.SetScaleArray.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6716.SetScaleArray.array_list"/>
       </Property>
       <Property name="ShaderPreset" id="6716.ShaderPreset" number_of_elements="1">
         <Element index="0" value="1"/>
@@ -9052,9 +9022,7 @@
       </Property>
       <Property name="SelectionPointFieldDataArrayName" id="6888.SelectionPointFieldDataArrayName" number_of_elements="1">
         <Element index="0" value="null"/>
-        <Domain name="array_list" id="6888.SelectionPointFieldDataArrayName.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6888.SelectionPointFieldDataArrayName.array_list"/>
       </Property>
       <Property name="SelectionVisibility" id="6888.SelectionVisibility" number_of_elements="1">
         <Element index="0" value="1"/>
@@ -9121,9 +9089,7 @@
         <Element index="2" value=""/>
         <Element index="3" value=""/>
         <Element index="4" value=""/>
-        <Domain name="array_list" id="6888.ColorArrayName.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6888.ColorArrayName.array_list"/>
         <Domain name="field_list" id="6888.ColorArrayName.field_list">
           <Entry value="0" text="Point Data"/>
           <Entry value="1" text="Cell Data"/>
@@ -9213,9 +9179,7 @@
       </Property>
       <Property name="OSPRayScaleArray" id="6888.OSPRayScaleArray" number_of_elements="1">
         <Element index="0" value="null"/>
-        <Domain name="array_list" id="6888.OSPRayScaleArray.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6888.OSPRayScaleArray.array_list"/>
       </Property>
       <Property name="OSPRayScaleFunction" id="6888.OSPRayScaleFunction" number_of_elements="1">
         <Proxy value="6826"/>
@@ -9238,9 +9202,7 @@
         <Element index="2" value=""/>
         <Element index="3" value="0"/>
         <Element index="4" value="null"/>
-        <Domain name="array_list" id="6888.OpacityArray.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6888.OpacityArray.array_list"/>
       </Property>
       <Property name="OpacityByArray" id="6888.OpacityByArray" number_of_elements="1">
         <Element index="0" value="0"/>
@@ -9483,9 +9445,7 @@
         <Element index="2" value=""/>
         <Element index="3" value="0"/>
         <Element index="4" value="null"/>
-        <Domain name="array_list" id="6888.SetScaleArray.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="6888.SetScaleArray.array_list"/>
       </Property>
       <Property name="ShaderPreset" id="6888.ShaderPreset" number_of_elements="1">
         <Element index="0" value="1"/>
@@ -10642,9 +10602,7 @@
       </Property>
       <Property name="SelectionPointFieldDataArrayName" id="7404.SelectionPointFieldDataArrayName" number_of_elements="1">
         <Element index="0" value="null"/>
-        <Domain name="array_list" id="7404.SelectionPointFieldDataArrayName.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="7404.SelectionPointFieldDataArrayName.array_list"/>
       </Property>
       <Property name="SelectionVisibility" id="7404.SelectionVisibility" number_of_elements="1">
         <Element index="0" value="1"/>
@@ -10711,9 +10669,7 @@
         <Element index="2" value=""/>
         <Element index="3" value=""/>
         <Element index="4" value=""/>
-        <Domain name="array_list" id="7404.ColorArrayName.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="7404.ColorArrayName.array_list"/>
         <Domain name="field_list" id="7404.ColorArrayName.field_list">
           <Entry value="0" text="Point Data"/>
           <Entry value="1" text="Cell Data"/>
@@ -10803,9 +10759,7 @@
       </Property>
       <Property name="OSPRayScaleArray" id="7404.OSPRayScaleArray" number_of_elements="1">
         <Element index="0" value="null"/>
-        <Domain name="array_list" id="7404.OSPRayScaleArray.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="7404.OSPRayScaleArray.array_list"/>
       </Property>
       <Property name="OSPRayScaleFunction" id="7404.OSPRayScaleFunction" number_of_elements="1">
         <Proxy value="7342"/>
@@ -10828,9 +10782,7 @@
         <Element index="2" value=""/>
         <Element index="3" value="0"/>
         <Element index="4" value="null"/>
-        <Domain name="array_list" id="7404.OpacityArray.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="7404.OpacityArray.array_list"/>
       </Property>
       <Property name="OpacityByArray" id="7404.OpacityByArray" number_of_elements="1">
         <Element index="0" value="0"/>
@@ -11073,9 +11025,7 @@
         <Element index="2" value=""/>
         <Element index="3" value="0"/>
         <Element index="4" value="null"/>
-        <Domain name="array_list" id="7404.SetScaleArray.array_list">
-          <String text="null"/>
-        </Domain>
+        <Domain name="array_list" id="7404.SetScaleArray.array_list"/>
       </Property>
       <Property name="ShaderPreset" id="7404.ShaderPreset" number_of_elements="1">
         <Element index="0" value="1"/>
@@ -11208,11 +11158,11 @@
     </Proxy>
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="4961" servers="1">
       <Property name="FileName" id="4961.FileName" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsNR139.vtu"/>
+        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R139.vtu"/>
         <Domain name="files" id="4961.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="4961.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsNR139.vtu"/>
+        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R139.vtu"/>
       </Property>
       <Property name="TimestepValues" id="4961.TimestepValues"/>
       <Property name="CellArrayInfo" id="4961.CellArrayInfo"/>
@@ -11233,11 +11183,11 @@
     </Proxy>
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="4983" servers="1">
       <Property name="FileName" id="4983.FileName" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsNR162.vtu"/>
+        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R162.vtu"/>
         <Domain name="files" id="4983.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="4983.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsNR162.vtu"/>
+        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R162.vtu"/>
       </Property>
       <Property name="TimestepValues" id="4983.TimestepValues"/>
       <Property name="CellArrayInfo" id="4983.CellArrayInfo"/>
@@ -11258,11 +11208,11 @@
     </Proxy>
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="5005" servers="1">
       <Property name="FileName" id="5005.FileName" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsNR175.vtu"/>
+        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R175.vtu"/>
         <Domain name="files" id="5005.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="5005.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsNR175.vtu"/>
+        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R175.vtu"/>
       </Property>
       <Property name="TimestepValues" id="5005.TimestepValues"/>
       <Property name="CellArrayInfo" id="5005.CellArrayInfo"/>
@@ -11283,11 +11233,11 @@
     </Proxy>
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="5027" servers="1">
       <Property name="FileName" id="5027.FileName" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsNR201.vtu"/>
+        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R201.vtu"/>
         <Domain name="files" id="5027.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="5027.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsNR201.vtu"/>
+        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R201.vtu"/>
       </Property>
       <Property name="TimestepValues" id="5027.TimestepValues"/>
       <Property name="CellArrayInfo" id="5027.CellArrayInfo"/>
@@ -11308,11 +11258,11 @@
     </Proxy>
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="5049" servers="1">
       <Property name="FileName" id="5049.FileName" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsNR208.vtu"/>
+        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R208.vtu"/>
         <Domain name="files" id="5049.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="5049.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsNR208.vtu"/>
+        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R208.vtu"/>
       </Property>
       <Property name="TimestepValues" id="5049.TimestepValues"/>
       <Property name="CellArrayInfo" id="5049.CellArrayInfo"/>
@@ -11333,11 +11283,11 @@
     </Proxy>
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="5071" servers="1">
       <Property name="FileName" id="5071.FileName" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsNR222.vtu"/>
+        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R222.vtu"/>
         <Domain name="files" id="5071.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="5071.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsNR222.vtu"/>
+        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R222.vtu"/>
       </Property>
       <Property name="TimestepValues" id="5071.TimestepValues"/>
       <Property name="CellArrayInfo" id="5071.CellArrayInfo"/>
@@ -11358,11 +11308,11 @@
     </Proxy>
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="5093" servers="1">
       <Property name="FileName" id="5093.FileName" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsNR234.vtu"/>
+        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R234.vtu"/>
         <Domain name="files" id="5093.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="5093.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsNR234.vtu"/>
+        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R234.vtu"/>
       </Property>
       <Property name="TimestepValues" id="5093.TimestepValues"/>
       <Property name="CellArrayInfo" id="5093.CellArrayInfo"/>
@@ -12104,13 +12054,13 @@
       <Item id="4895" name="cell05.stl"/>
       <Item id="4917" name="cell06.stl"/>
       <Item id="4939" name="cell07.stl"/>
-      <Item id="4961" name="cellsNR139.vtu"/>
-      <Item id="4983" name="cellsNR162.vtu"/>
-      <Item id="5005" name="cellsNR175.vtu"/>
-      <Item id="5027" name="cellsNR201.vtu"/>
-      <Item id="5049" name="cellsNR208.vtu"/>
-      <Item id="5071" name="cellsNR222.vtu"/>
-      <Item id="5093" name="cellsNR234.vtu"/>
+      <Item id="4961" name="cellsN8R..vtu"/>
+      <Item id="4983" name="cellsN8R..vtu"/>
+      <Item id="5005" name="cellsN8R..vtu"/>
+      <Item id="5027" name="cellsN8R..vtu"/>
+      <Item id="5049" name="cellsN8R..vtu"/>
+      <Item id="5071" name="cellsN8R..vtu"/>
+      <Item id="5093" name="cellsN8R..vtu"/>
     </ProxyCollection>
     <ProxyCollection name="timekeeper">
       <Item id="259" name="TimeKeeper1"/>
