@@ -12,7 +12,7 @@ fname = "cellsN8R"
 def save_geom(label, pnts):
   n = pnts.shape[0]
   print("  label:%-4s count:%i"% (label, n))
-  np.savetxt(tdir+'geom_'+label+".dat", pnts) # text file
+  np.savetxt(tdir+'geom_'+label+".dat", pnts, fmt='%2.4f') # text file
   d = {}                                      # vtk file
   null = np.full(n, 0.0)                      #
   d["null"] = null                            #    
