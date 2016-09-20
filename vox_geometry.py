@@ -52,9 +52,9 @@ for k in range(zsize-1):
       p8 = images[k:k+2,j:j+2,i:i+2]  # (2x2x2) voxel kernel
       vals = np.unique(p8)            # what cells are in this 8 voxel kernel?
       if (vals.shape[0] == 1) and (vals[0] == 0): continue # skip empty
-      z = (24.73 / 2) - ((k+2) * 24.73 / zsize)  # calculate 3D point coordinates
-      x = ((i+1) * 70.66 / xsize) - (70.66 / 2)
-      y = (70.66 / 2) - ((j+1) * 70.66 / ysize)
+      z = (24.73 / 2) - ((k+1) * 24.73 / (zsize-2))  # calculate 3D point coordinates
+      x = ((i) * 70.66 / xsize) - (70.66 / 2)
+      y = (70.66 / 2) - ((j) * 70.66 / ysize)
       pnts[pcnt] = (''.join(map(str,vals)), (x,y,z)) # store label & point coordinates
       pcnt += 1
 pnts = pnts[0:pcnt]          # downsize array
