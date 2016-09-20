@@ -40,12 +40,13 @@ gmsh: create the 3D mesh
 gmsh: view the 3D mesh
   gmsh remesh.msh
 
-python: extract topology
-  python vox_topology.py
-  -> topology/cellsNxR.vtu
+python: extract geometry
+  python vox_geometry.py
+  -> geometry/cellsNxR.vtu
 
-paraview: (testing) view topology
-  topology/topology_00.pvsm
+paraview: (testing) view geometry
+  geometry/geometry_xx.pvsm
+
 
 
 **********************************************
