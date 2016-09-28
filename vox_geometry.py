@@ -4,24 +4,11 @@ import numpy as np
 import libtiff as tf
 from operator import add
 from pyevtk.hl import pointsToVTK
-from mayavi.mlab import *
+#from mayavi.mlab import *
 
 fdir = "layers/"
 tdir = "geometry/"
 fname = "cellsN8R"
-
-# recursively find next point on line
-def next_point(slabels, ijk, end_label, line_label, llist):
-  llist.append(ijk)
-  slabels['hit'][tuple(ijk)] = 1 # mark space point as hit
-  adj = [[-1,0,0],[1,0,0],[0,-1,0],[0,1,0],[0,0,-1],[0,0,1]]
-  for n in range(len(adj)): # scan adjacent points
-    t = map(add, ijk, adj[n])
-    if (slabels['hit'][tuple(t)] != 1): # already hit?
-      l = slabels['label'][tuple(t)]
-      if (l == line_label) or (l == end_label): # on the line?
-        next_point(slabels, t, end_label, line_label, llist) # keep going
-  return
 
 # indices to coordinates
 def i2xyz(ijk, size):
@@ -29,6 +16,33 @@ def i2xyz(ijk, size):
   y = (70.66 / 2) - ((ijk[1]) * 70.66 / size[1])
   z = (24.73 / 2) - ((ijk[2]+1) * 24.73 / (size[2]-2))
   return np.array([x,y,z])
+
+# save gmsh geo file
+def save_gmsh(llist, size):
+  fname = "cells.geo"
+  f1 = open(tdir+fname, 'w')
+  f1.write("//\n")
+  f1.write("//\n")
+  f1.write("//\n")
+  f1.write("\n")
+  f1.write("lc = 5e-1;\n")
+  f1.write("\n")
+  for i in range(len(llist)):
+    f1.write("Point(" + str(i+1) + ") = {%2.4f, %2.4f, %2.4f, lc};\n"% (tuple(i2xyz(llist[i], size))))
+  f1.write("\n")
+  f1.write("Line(1) = {")
+  for i in range(len(llist)):
+    f1.write(str(i+1))
+    if i < (len(llist)-1): f1.write(",")
+  f1.write("} ;\n")
+  f1.write("BSpline(2) = {")
+  for i in range(len(llist)):
+    f1.write(str(i+1))
+    if i < (len(llist)-1): f1.write(",")
+  f1.write("} ;\n")
+  f1.write("\n")
+  f1.close()
+  return
 
 # save geometry files
 def save_geom(label, pnts, size):
@@ -42,6 +56,19 @@ def save_geom(label, pnts, size):
   null = np.full(n, 0.0)                      #
   d["null"] = null                            #    
   pointsToVTK(tdir+'geom_'+label, xyz[:,0], xyz[:,1], xyz[:,2], d)
+  return
+
+# recursively find next point on line
+def next_point(slabels, ijk, end_label, line_label, llist):
+  llist.append(ijk)
+  slabels['hit'][tuple(ijk)] = 1 # mark space point as hit
+  adj = [[-1,0,0],[1,0,0],[0,-1,0],[0,1,0],[0,0,-1],[0,0,1]]
+  for n in range(len(adj)): # scan adjacent points
+    t = map(add, ijk, adj[n])
+    if (slabels['hit'][tuple(t)] != 1): # already hit?
+      l = slabels['label'][tuple(t)]
+      if (l == line_label) or (l == end_label): # on the line?
+        next_point(slabels, t, end_label, line_label, llist) # keep going
   return
 
 # get the reduced image stack
@@ -86,18 +113,18 @@ pnts = pnts[0:pcnt]          # downsize array
 pnts.sort(order=['label'])   # sort array
 
 # output geometry data files
-print "output geometry data files"
-current = pnts['label'][0]
-lcnt = 0
-for i, p in enumerate(pnts):
-  if p['label'] == current: lcnt += 1
-  else:
-    save_geom(current, pnts['ijk'][i-lcnt:i], [xsize, ysize,zsize])
-    lcnt = 1
-    current = p['label']
-save_geom(current, pnts['ijk'][i-lcnt:i], [xsize, ysize,zsize]) # one more time
+#print "output geometry data files"
+#current = pnts['label'][0]
+#lcnt = 0
+#for i, p in enumerate(pnts):
+#  if p['label'] == current: lcnt += 1
+#  else:
+#    save_geom(current, pnts['ijk'][i-lcnt:i], [xsize, ysize,zsize])
+#    lcnt = 1
+#    current = p['label']
+#save_geom(current, pnts['ijk'][i-lcnt:i], [xsize, ysize,zsize]) # one more time
 
-# get ordered line point list
+# create ordered line point list
 end_label = "0567"
 line_label = "567"
 print("line walk: %s-%s-%s"% (end_label, line_label, end_label))
@@ -107,9 +134,12 @@ next_point(slabels, ijk, end_label, line_label, llist)
 print llist
 
 # plot the line
-llist = np.array(llist)
-plot3d(llist[:,0],llist[:,1],llist[:,2], tube_radius=0.1, color=(1,0,0))
-show()
+#llist = np.array(llist)
+#plot3d(llist[:,0],llist[:,1],llist[:,2], tube_radius=0.1, color=(1,0,0))
+#show()
+
+# output gmsh file
+save_gmsh(llist, [xsize, ysize,zsize])
 
 print
 
