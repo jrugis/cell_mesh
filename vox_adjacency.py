@@ -4,7 +4,7 @@ import numpy as np
 import libtiff as tf
 
 fdir = "layers/"
-fname = "cellsN8R"
+fname = "cellsN16R"
 
 def write_msh(xsize, ysize, zsize, quads):
   qsize = quads.shape

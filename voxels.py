@@ -26,7 +26,7 @@ print images.shape
 
 icount = images.shape[0]    # image count in stack
 isize = images.shape[1]     # side dimension of images
-bsize = 2                   # decimation block size, MUST DIVIDE isize !!!
+bsize = 1                 # decimation block size, MUST DIVIDE isize !!!
 bcount = isize / bsize      # side dimension of reduced images
 imagesR = np.zeros((icount, bcount, bcount), dtype=np.uint8) # reduced images array
 print imagesR.shape
