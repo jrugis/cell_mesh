@@ -17,6 +17,7 @@ python: reduce image stack (and check for errors)
   python voxels.py <- layers/cellsN.tif
   -> layers/cellsNxR.tif
 
+***********
 python: (testing) convert reduced image stack to vtk's for ParaView
   python vox2vtk.py <- layers/cellsNxR.tif
   -> layers/cellsNxRxxx.vtu
@@ -24,6 +25,7 @@ python: (testing) convert reduced image stack to vtk's for ParaView
 paraview: (testing) view files
   layers/check_xx.pvsm
 
+***********
 python: check adjacency and create quad boundry mesh
   python vox_adjacency.py <- layers/cellsNxR.tif
   -> bounding.msh
@@ -49,7 +51,12 @@ python: extract geometry
 paraview: (testing) view geometry
   geometry/geometry_xx.pvsm
 
+***********
 
+python tif2inr.py
+~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image cells.inr 0.6 0.4 0.8
+python mesh2vtk.py
+paraview
 
 **********************************************
 **********************************************
