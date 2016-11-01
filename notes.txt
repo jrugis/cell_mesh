@@ -1,6 +1,9 @@
 http://perso.uclouvain.be/vincent.legat/teaching/data/meca2170-GmshCompanion.pdf
 
 
+~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image_with_features
+
+
 **********************************************
 **********************************************
 WORKFLOW
@@ -47,6 +50,7 @@ gmsh: view the 3D mesh
 python: extract geometry
   python vox_geometry.py
   -> geometry/cellsNxR.vtu
+  -> geometry/cells.geo
 
 paraview: (testing) view geometry
   geometry/geometry_xx.pvsm
@@ -55,6 +59,7 @@ paraview: (testing) view geometry
 
 python tif2inr.py
 ~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image cells.inr 0.6 0.4 0.8
+~/Downloads/medit-2.3-linux out.mesh
 python mesh2vtk.py
 paraview
 

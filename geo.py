@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import numpy as np
+from scipy.interpolate import splprep, splev
 from operator import add
 from pyevtk.hl import pointsToVTK
 
@@ -72,8 +73,48 @@ def save_geo(fname, size, pnts, slabels):
   f.write("lc = 5e-1;\n")
   f.write("\n")
   pcnt = save_line(f, 0, 0, "0567", "067", size, pnts, slabels)
-  pcnt = save_line(f, pcnt, 2, "0567", "567", size, pnts, slabels)
+  #pcnt = save_line(f, pcnt, 2, "0567", "567", size, pnts, slabels)
   f.write("Coherence Mesh;\n")
+  f.close()
+  return
+
+# save a cgal polyline
+def save_pline(f, end_label, line_label, size, pnts, slabels):
+
+  llist = [] # get list of line indicies
+  for t in np.where(pnts['label']==end_label)[0]: # find the end points
+    ijk = pnts['ijk'][t].tolist()  # get end point indices
+    slabels['hit'][tuple(ijk)] = 0 # clear end point hits
+  next_point(slabels, ijk, end_label, line_label, llist) # walk from the last end point
+ 
+  points = np.zeros((len(llist[0]), len(llist))) # indicies -> point coordinates
+  for i in range(len(llist)): 
+    #points[:,i] = i2xyz(llist[i], size)
+    points[0,i] = 8 * 0.069 * llist[i][0]
+    points[1,i] = 8 * 0.069 * llist[i][1]
+    points[2,i] = 0.798 * llist[i][2]
+
+  s = 10.0 # smoothness parameter
+  k = 3 # b-spline order
+  nest = -1 # estimate of number of knots needed (-1 = maximal)
+  tckp,u = splprep(points, s=s, k=k, nest=-1) # find b-spline knot points
+  xnew,ynew,znew = splev(np.linspace(0, 1, 30), tckp) # interpolate smooth points
+
+  f.write(str(len(xnew))+" ")
+  for i in range(len(xnew)):
+    f.write("%2.4f %2.4f %2.4f "% (xnew[i], ynew[i], znew[i]))
+  f.write('\n')
+
+  ##import mayavi.mlab as mylab
+  ##mylab.plot3d(points[0], points[1], points[2], color=(1,0,0))
+  ##mylab.plot3d(xnew, ynew, znew, color=(0,1,0))
+  ##mylab.show()
+  return
+
+# save cgal polylines file
+def save_polylines(fname, size, pnts, slabels):
+  f = open(fname, 'w')
+  save_pline(f, "0567", "067", size, pnts, slabels)
   f.close()
   return
 

@@ -68,8 +68,12 @@ for i, p in enumerate(pnts):
 geo.save_vtk(tdir, current, pnts['ijk'][i-lcnt:i], [xsize, ysize,zsize]) # one more time
 
 # output gmsh geo file
-print "output gmsh geo file"
-geo.save_geo(tdir+"cells.geo", [xsize,ysize,zsize], pnts, slabels)
+##print "output gmsh geo file"
+##geo.save_geo(tdir+"cells.geo", [xsize,ysize,zsize], pnts, slabels)
+
+# output cgal mesh file
+print "output cgal polylines file"
+geo.save_polylines(tdir+"polylines.txt", [xsize,ysize,zsize], pnts, slabels)
 
 # execution time
 print("%dsec" % (tm.time() - t1))

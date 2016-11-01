@@ -14800,81 +14800,81 @@
     </Proxy>
     <Proxy group="sources" type="stlreader" id="4719" servers="1">
       <Property name="FileNameInfo" id="4719.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cell01.stl"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cell01.stl"/>
       </Property>
       <Property name="FileNames" id="4719.FileNames" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cell01.stl"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cell01.stl"/>
         <Domain name="files" id="4719.FileNames.files"/>
       </Property>
       <Property name="TimestepValues" id="4719.TimestepValues"/>
     </Proxy>
     <Proxy group="sources" type="stlreader" id="4741" servers="1">
       <Property name="FileNameInfo" id="4741.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cell02.stl"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cell02.stl"/>
       </Property>
       <Property name="FileNames" id="4741.FileNames" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cell02.stl"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cell02.stl"/>
         <Domain name="files" id="4741.FileNames.files"/>
       </Property>
       <Property name="TimestepValues" id="4741.TimestepValues"/>
     </Proxy>
     <Proxy group="sources" type="stlreader" id="4763" servers="1">
       <Property name="FileNameInfo" id="4763.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cell03.stl"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cell03.stl"/>
       </Property>
       <Property name="FileNames" id="4763.FileNames" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cell03.stl"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cell03.stl"/>
         <Domain name="files" id="4763.FileNames.files"/>
       </Property>
       <Property name="TimestepValues" id="4763.TimestepValues"/>
     </Proxy>
     <Proxy group="sources" type="stlreader" id="4785" servers="1">
       <Property name="FileNameInfo" id="4785.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cell04.stl"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cell04.stl"/>
       </Property>
       <Property name="FileNames" id="4785.FileNames" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cell04.stl"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cell04.stl"/>
         <Domain name="files" id="4785.FileNames.files"/>
       </Property>
       <Property name="TimestepValues" id="4785.TimestepValues"/>
     </Proxy>
     <Proxy group="sources" type="stlreader" id="4807" servers="1">
       <Property name="FileNameInfo" id="4807.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cell05.stl"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cell05.stl"/>
       </Property>
       <Property name="FileNames" id="4807.FileNames" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cell05.stl"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cell05.stl"/>
         <Domain name="files" id="4807.FileNames.files"/>
       </Property>
       <Property name="TimestepValues" id="4807.TimestepValues"/>
     </Proxy>
     <Proxy group="sources" type="stlreader" id="4829" servers="1">
       <Property name="FileNameInfo" id="4829.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cell06.stl"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cell06.stl"/>
       </Property>
       <Property name="FileNames" id="4829.FileNames" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cell06.stl"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cell06.stl"/>
         <Domain name="files" id="4829.FileNames.files"/>
       </Property>
       <Property name="TimestepValues" id="4829.TimestepValues"/>
     </Proxy>
     <Proxy group="sources" type="stlreader" id="4851" servers="1">
       <Property name="FileNameInfo" id="4851.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cell07.stl"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cell07.stl"/>
       </Property>
       <Property name="FileNames" id="4851.FileNames" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cell07.stl"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cell07.stl"/>
         <Domain name="files" id="4851.FileNames.files"/>
       </Property>
       <Property name="TimestepValues" id="4851.TimestepValues"/>
     </Proxy>
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="4873" servers="1">
       <Property name="FileName" id="4873.FileName" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR139.vtu"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR139.vtu"/>
         <Domain name="files" id="4873.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="4873.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR139.vtu"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR139.vtu"/>
       </Property>
       <Property name="TimestepValues" id="4873.TimestepValues"/>
 <<<<<<< HEAD
@@ -14915,11 +14915,11 @@
     </Proxy>
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="4961" servers="1">
       <Property name="FileName" id="4961.FileName" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R139.vtu"/>
+        <Element index="0" value="/home/jrugis/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R139.vtu"/>
         <Domain name="files" id="4961.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="4961.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R139.vtu"/>
+        <Element index="0" value="/home/jrugis/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R139.vtu"/>
       </Property>
       <Property name="TimestepValues" id="4961.TimestepValues"/>
       <Property name="CellArrayInfo" id="4961.CellArrayInfo"/>
@@ -14942,19 +14942,19 @@
 <<<<<<< HEAD
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="4895" servers="1">
       <Property name="FileName" id="4895.FileName" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR162.vtu"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR162.vtu"/>
         <Domain name="files" id="4895.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="4895.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR162.vtu"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR162.vtu"/>
 =======
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="4983" servers="1">
       <Property name="FileName" id="4983.FileName" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R162.vtu"/>
+        <Element index="0" value="/home/jrugis/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R162.vtu"/>
         <Domain name="files" id="4983.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="4983.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R162.vtu"/>
+        <Element index="0" value="/home/jrugis/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R162.vtu"/>
 >>>>>>> dc61b71635757acc740d20af6050d6846939af74
       </Property>
       <Property name="TimestepValues" id="4895.TimestepValues"/>
@@ -14977,19 +14977,19 @@
 <<<<<<< HEAD
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="4917" servers="1">
       <Property name="FileName" id="4917.FileName" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR175.vtu"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR175.vtu"/>
         <Domain name="files" id="4917.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="4917.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR175.vtu"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR175.vtu"/>
 =======
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="5005" servers="1">
       <Property name="FileName" id="5005.FileName" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R175.vtu"/>
+        <Element index="0" value="/home/jrugis/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R175.vtu"/>
         <Domain name="files" id="5005.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="5005.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R175.vtu"/>
+        <Element index="0" value="/home/jrugis/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R175.vtu"/>
 >>>>>>> dc61b71635757acc740d20af6050d6846939af74
       </Property>
       <Property name="TimestepValues" id="4917.TimestepValues"/>
@@ -15012,19 +15012,19 @@
 <<<<<<< HEAD
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="4939" servers="1">
       <Property name="FileName" id="4939.FileName" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR201.vtu"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR201.vtu"/>
         <Domain name="files" id="4939.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="4939.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR201.vtu"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR201.vtu"/>
 =======
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="5027" servers="1">
       <Property name="FileName" id="5027.FileName" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R201.vtu"/>
+        <Element index="0" value="/home/jrugis/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R201.vtu"/>
         <Domain name="files" id="5027.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="5027.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R201.vtu"/>
+        <Element index="0" value="/home/jrugis/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R201.vtu"/>
 >>>>>>> dc61b71635757acc740d20af6050d6846939af74
       </Property>
       <Property name="TimestepValues" id="4939.TimestepValues"/>
@@ -15047,19 +15047,19 @@
 <<<<<<< HEAD
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="4961" servers="1">
       <Property name="FileName" id="4961.FileName" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR208.vtu"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR208.vtu"/>
         <Domain name="files" id="4961.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="4961.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR208.vtu"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR208.vtu"/>
 =======
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="5049" servers="1">
       <Property name="FileName" id="5049.FileName" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R208.vtu"/>
+        <Element index="0" value="/home/jrugis/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R208.vtu"/>
         <Domain name="files" id="5049.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="5049.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R208.vtu"/>
+        <Element index="0" value="/home/jrugis/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R208.vtu"/>
 >>>>>>> dc61b71635757acc740d20af6050d6846939af74
       </Property>
       <Property name="TimestepValues" id="4961.TimestepValues"/>
@@ -15082,19 +15082,19 @@
 <<<<<<< HEAD
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="4983" servers="1">
       <Property name="FileName" id="4983.FileName" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR222.vtu"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR222.vtu"/>
         <Domain name="files" id="4983.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="4983.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR222.vtu"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR222.vtu"/>
 =======
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="5071" servers="1">
       <Property name="FileName" id="5071.FileName" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R222.vtu"/>
+        <Element index="0" value="/home/jrugis/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R222.vtu"/>
         <Domain name="files" id="5071.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="5071.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R222.vtu"/>
+        <Element index="0" value="/home/jrugis/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R222.vtu"/>
 >>>>>>> dc61b71635757acc740d20af6050d6846939af74
       </Property>
       <Property name="TimestepValues" id="4983.TimestepValues"/>
@@ -15117,19 +15117,19 @@
 <<<<<<< HEAD
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="5005" servers="1">
       <Property name="FileName" id="5005.FileName" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR234.vtu"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR234.vtu"/>
         <Domain name="files" id="5005.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="5005.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/Users/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR234.vtu"/>
+        <Element index="0" value="/home/jrugis/Desktop/nesi00119/cell_mesh/layers/cellsNR234.vtu"/>
 =======
     <Proxy group="sources" type="XMLUnstructuredGridReader" id="5093" servers="1">
       <Property name="FileName" id="5093.FileName" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R234.vtu"/>
+        <Element index="0" value="/home/jrugis/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R234.vtu"/>
         <Domain name="files" id="5093.FileName.files"/>
       </Property>
       <Property name="FileNameInfo" id="5093.FileNameInfo" number_of_elements="1">
-        <Element index="0" value="/media/jrugis/data_00/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R234.vtu"/>
+        <Element index="0" value="/home/jrugis/nesi00119/data/parotid_acinar_structures/cell_mesh/layers/cellsN8R234.vtu"/>
 >>>>>>> dc61b71635757acc740d20af6050d6846939af74
       </Property>
       <Property name="TimestepValues" id="5005.TimestepValues"/>
