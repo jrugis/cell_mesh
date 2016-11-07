@@ -90,11 +90,11 @@ def save_pline(f, end_label, line_label, size, pnts, slabels):
   points = np.zeros((len(llist[0]), len(llist))) # indicies -> point coordinates
   for i in range(len(llist)): 
     #points[:,i] = i2xyz(llist[i], size)
-    points[0,i] = 8 * 0.069 * llist[i][0]
-    points[1,i] = 8 * 0.069 * llist[i][1]
-    points[2,i] = 0.798 * llist[i][2]
+    points[0,i] = 8 * 0.069 * (llist[i][0] + 0.5)
+    points[1,i] = 8 * 0.069 * (llist[i][1] + 0.5)
+    points[2,i] = 0.798 * (llist[i][2] + 0.5)
 
-  s = 10.0 # smoothness parameter
+  s = 15.0 # smoothness parameter
   k = 3 # b-spline order
   nest = -1 # estimate of number of knots needed (-1 = maximal)
   tckp,u = splprep(points, s=s, k=k, nest=-1) # find b-spline knot points
@@ -105,10 +105,10 @@ def save_pline(f, end_label, line_label, size, pnts, slabels):
     f.write("%2.4f %2.4f %2.4f "% (xnew[i], ynew[i], znew[i]))
   f.write('\n')
 
-  ##import mayavi.mlab as mylab
-  ##mylab.plot3d(points[0], points[1], points[2], color=(1,0,0))
-  ##mylab.plot3d(xnew, ynew, znew, color=(0,1,0))
-  ##mylab.show()
+  import mayavi.mlab as mylab
+  mylab.plot3d(points[0], points[1], points[2], color=(1,0,0))
+  mylab.plot3d(xnew, ynew, znew, color=(0,1,0))
+  mylab.show()
   return
 
 # save cgal polylines file

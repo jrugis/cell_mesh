@@ -3,9 +3,11 @@ import libtiff as tf
 import numpy as np
 
 fdir = "layers/"
-fname = "cellsN"
+##fname = "cellsN"
+fname = "cellsN8R"
 mdir = "mesh3d/"
-mname = "cells.inr"
+##mname = "cells.inr"
+mname = "cells8.inr"
 
 # get the reduced image stack
 print "load image stack"
@@ -40,9 +42,11 @@ header += "TYPE=unsigned fixed\n"
 header += "PIXSIZE=8 bits\n"
 header += "SCALE=2**0\n"
 header += "CPU=pc\n"
-header += "VX=0.069\n"
-header += "VY=0.069\n"
-header += "VZ=0.824\n"
+##header += "VX=0.069\n"
+##header += "VY=0.069\n"
+header += "VX=0.552\n"
+header += "VY=0.552\n"
+header += "VZ=0.798\n"
 header += "#GEOMETRY=CARTESIAN\n"
 for i in range(252-len(header)):
   header += "\n"

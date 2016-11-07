@@ -20,6 +20,31 @@ python: reduce image stack (and check for errors)
   python voxels.py <- layers/cellsN.tif
   -> layers/cellsNxR.tif
 
+python: convert tiff stack to inr format
+  python tif2inr.py <- layers/cellsN.tif
+  -> mesh3d/cells.inr
+
+python create polylines file
+  python vox_geometry.py <- layers/cellsN8R.tif
+  -> geometry/polylines.txt
+
+CGAL: create mesh with (or without) constraints
+  ~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image_with_features mesh3d/cells.inr geometry/polylines.txt 0.6 0.6 0.4 0.8
+      <- mesh3d/cells.inr, geometry/polylines.txt 
+  ~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image cells.inr 0.6 0.4 0.8
+      <- mesh3d/cells.inr
+  -> out.mesh 
+
+medit: view the mesh
+  ~/Downloads/medit-2.3-linux out.mesh
+
+paraview: check mesh and polylines alignment  
+  python mesh2vtk.py
+  python poly2vtk.py
+
+**********************************************
+**********************************************
+TESTING
 ***********
 python: (testing) convert reduced image stack to vtk's for ParaView
   python vox2vtk.py <- layers/cellsNxR.tif
@@ -54,14 +79,6 @@ python: extract geometry
 
 paraview: (testing) view geometry
   geometry/geometry_xx.pvsm
-
-***********
-
-python tif2inr.py
-~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image cells.inr 0.6 0.4 0.8
-~/Downloads/medit-2.3-linux out.mesh
-python mesh2vtk.py
-paraview
 
 **********************************************
 **********************************************
