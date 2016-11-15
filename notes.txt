@@ -1,6 +1,5 @@
 http://perso.uclouvain.be/vincent.legat/teaching/data/meca2170-GmshCompanion.pdf
 
-
 ~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image_with_features
 
 
@@ -18,15 +17,15 @@ bash: combine segmented layers into tiff stacK
 
 python: reduce image stack (and check for errors)
   python voxels.py <- layers/cellsN.tif
-  -> layers/cellsNxR.tif
-
-python: convert tiff stack to inr format
-  python tif2inr.py <- layers/cellsN.tif
-  -> mesh3d/cells.inr
+  -> layers/cellsN8R.tif
 
 python create polylines file
   python vox_geometry.py <- layers/cellsN8R.tif
   -> geometry/polylines.txt
+
+python: convert tiff stack to inr format
+  python tif2inr.py <- layers/cellsN.tif
+  -> mesh3d/cells.inr
 
 CGAL: create mesh with (or without) constraints
   ~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image_with_features mesh3d/cells.inr geometry/polylines.txt 0.6 0.6 0.4 0.8

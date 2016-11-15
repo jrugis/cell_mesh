@@ -1,9 +1,25 @@
 #!/usr/bin/python
 
 import numpy as np
-from scipy.interpolate import splprep, splev
-from operator import add
-from pyevtk.hl import pointsToVTK
+import mayavi.mlab as mylab
+
+# temp vis for debug
+def view_lsegs(slabels):
+  for k in range(slabels.shape[2]):
+    for j in range(slabels.shape[1]):
+      for i in range(slabels.shape[0]):
+        if slabels[i][j][k]['xyzlabel'][0] != "" :
+          mylab.plot3d([i,i+1], [j,j], [k,k], color=(1,0,0))
+        if slabels[i][j][k]['xyzlabel'][1] != "" :
+          mylab.plot3d([i,i], [j,j+1], [k,k], color=(1,0,0))
+        if slabels[i][j][k]['xyzlabel'][2] != "" :
+          mylab.plot3d([i,i], [j,j], [k,k+1], color=(1,0,0))
+  endp = np.where(slabels['endp']==True)
+  mylab.points3d(endp[0], endp[1], endp[2], color=(1,1,0), scale_factor=0.75)
+  #mylab.plot3d(points[0], points[1], points[2], color=(1,0,0))
+  #mylab.plot3d(xnew, ynew, znew, color=(0,1,0))
+  mylab.show()
+  return
 
 # indices to coordinates
 def i2xyz(ijk, size):
@@ -12,109 +28,65 @@ def i2xyz(ijk, size):
   z = (24.73 / 2) - ((ijk[2]+1) * 24.73 / (size[2]-2))
   return np.array([x,y,z])
 
-# recursively find next point on line
-def next_point(slabels, ijk, end_label, line_label, llist):
-  llist.append(ijk)
-  slabels['hit'][tuple(ijk)] = 1 # mark space point as hit
-  adj = [[-1,0,0],[1,0,0],[0,-1,0],[0,1,0],[0,0,-1],[0,0,1]]
-  for n in range(len(adj)): # scan adjacent points
-    t = map(add, ijk, adj[n])
-    if (slabels['hit'][tuple(t)] != 1): # already hit?
-      l = slabels['label'][tuple(t)]
-      if (l == line_label) or (l == end_label): # on the line?
-        next_point(slabels, t, end_label, line_label, llist) # keep going
-  return
+# identify and label all line segments
+def line_segs(voxels, slabels): 
+  adj = [[0,-1,-1],[-1,0,-1],[-1,-1,0]] # voxel kernel direction offsets
+  segs = 0
+  for k in range(1, slabels.shape[2]):
+    for j in range(1, slabels.shape[1]):
+      for i in range(1, slabels.shape[0]):
+        for n in range(len(adj)): # check xyz directions
+          p4 = voxels[i+adj[n][0]:i+1, j+adj[n][1]:j+1, k+adj[n][2]:k+1]
+          vals = np.unique(p4) # what cells are in this 4 voxel kernel?
+          if len(vals) > 2: 
+            segs += 1
+            slabels['xyzlabel'][i,j,k][n] = ''.join(map(str,vals))
+  return segs
 
-# save vtk geometry files
-def save_vtk(fd, label, pnts, size):
-  n = pnts.shape[0]
-  print("  label:%-4s count:%i"% (label, n))
-  xyz = np.zeros((n,3), dtype=np.float)
-  for i, p in enumerate(pnts):
-    xyz[i] = i2xyz(p, size)
-  np.savetxt(fd+'geom_'+label+".dat", xyz, fmt='%2.4f') # text file
-  d = {}                                      # vtk file
-  null = np.full(n, 0.0)                      #
-  d["null"] = null                            #    
-  pointsToVTK(fd+'geom_'+label, xyz[:,0], xyz[:,1], xyz[:,2], d)
-  return
+# how many line segments meet at this point?
+def line_count(i, j, k, slabels): 
+  lcnt = 0
+  if slabels[i][j][k]['xyzlabel'][0] != "": lcnt += 1
+  if slabels[i][j][k]['xyzlabel'][1] != "": lcnt += 1
+  if slabels[i][j][k]['xyzlabel'][2] != "": lcnt += 1
+  if slabels[i-1][j][k]['xyzlabel'][0] != "": lcnt += 1
+  if slabels[i][j-1][k]['xyzlabel'][1] != "": lcnt += 1
+  if slabels[i][j][k-1]['xyzlabel'][2] != "": lcnt += 1
+  return lcnt
 
-# save a gmsh geo line
-def save_line(f, pcnt, lcnt, end_label, line_label, size, pnts, slabels):
-  llist = []
-  for t in np.where(pnts['label']==end_label)[0]: # find the end points
-    ijk = pnts['ijk'][t].tolist()  # get end point indices
-    slabels['hit'][tuple(ijk)] = 0 # clear end point hits
-  next_point(slabels, ijk, end_label, line_label, llist) # walk from the last end point
-  ll = len(llist)
-  for i in range(ll):
-    f.write("Point(" + str(pcnt+i+1) + ") = {%2.4f, %2.4f, %2.4f, lc};\n"% (tuple(i2xyz(llist[i], size))))
-  f.write("\n")
-  f.write("Line("+str(lcnt+1)+") = {")
-  for i in range(ll):
-    f.write(str(pcnt+i+1))
-    if i < (ll-1): f.write(",")
-  f.write("} ;\n")
-  f.write("BSpline("+str(lcnt+2)+") = {")
-  for i in range(ll):
-    f.write(str(pcnt+i+1))
-    if i < (ll-1): f.write(",")
-  f.write("};\n")
-  f.write("\n")
-  return ll
+# cull singleton line segments
+def line_cull(slabels): 
+  culled = 0
+  for k in range(1, slabels.shape[2]):
+    for j in range(1, slabels.shape[1]):
+      for i in range(1, slabels.shape[0]):
+        if line_count(i,j,k, slabels) == 1:
+          culled += 1
+          slabels[i][j][k]['xyzlabel'] = ('','','')
+          slabels[i-1][j][k]['xyzlabel'][0] = ''
+          slabels[i][j-1][k]['xyzlabel'][1] = ''
+          slabels[i][j][k-1]['xyzlabel'][2] = ''
+  return culled
 
-# save gmsh geo file
-def save_geo(fname, size, pnts, slabels):
-  f = open(fname, 'w')
-  f.write("//\n")
-  f.write("//\n")
-  f.write("//\n")
-  f.write("\n")
-  f.write("lc = 5e-1;\n")
-  f.write("\n")
-  pcnt = save_line(f, 0, 0, "0567", "067", size, pnts, slabels)
-  #pcnt = save_line(f, pcnt, 2, "0567", "567", size, pnts, slabels)
-  f.write("Coherence Mesh;\n")
-  f.close()
-  return
-
-# save a cgal polyline
-def save_pline(f, end_label, line_label, size, pnts, slabels):
-
-  llist = [] # get list of line indicies
-  for t in np.where(pnts['label']==end_label)[0]: # find the end points
-    ijk = pnts['ijk'][t].tolist()  # get end point indices
-    slabels['hit'][tuple(ijk)] = 0 # clear end point hits
-  next_point(slabels, ijk, end_label, line_label, llist) # walk from the last end point
- 
-  points = np.zeros((len(llist[0]), len(llist))) # indicies -> point coordinates
-  for i in range(len(llist)): 
-    #points[:,i] = i2xyz(llist[i], size)
-    points[0,i] = 8 * 0.069 * (llist[i][0] + 0.5)
-    points[1,i] = 8 * 0.069 * (llist[i][1] + 0.5)
-    points[2,i] = 0.798 * (llist[i][2] + 0.5)
-
-  s = 15.0 # smoothness parameter
-  k = 3 # b-spline order
-  nest = -1 # estimate of number of knots needed (-1 = maximal)
-  tckp,u = splprep(points, s=s, k=k, nest=-1) # find b-spline knot points
-  xnew,ynew,znew = splev(np.linspace(0, 1, 30), tckp) # interpolate smooth points
-
-  f.write(str(len(xnew))+" ")
-  for i in range(len(xnew)):
-    f.write("%2.4f %2.4f %2.4f "% (xnew[i], ynew[i], znew[i]))
-  f.write('\n')
-
-  import mayavi.mlab as mylab
-  mylab.plot3d(points[0], points[1], points[2], color=(1,0,0))
-  mylab.plot3d(xnew, ynew, znew, color=(0,1,0))
-  mylab.show()
-  return
+# identify end points
+def end_points(slabels):
+  endp = 0
+  for k in range(1, slabels.shape[2]):
+    for j in range(1, slabels.shape[1]):
+      for i in range(1, slabels.shape[0]):
+        if line_count(i,j,k, slabels) > 2:
+          endp += 1
+          slabels[i][j][k]['endp'] = True
+  return endp
 
 # save cgal polylines file
-def save_polylines(fname, size, pnts, slabels):
-  f = open(fname, 'w')
-  save_pline(f, "0567", "067", size, pnts, slabels)
+def save_polylines(fname, slabels):
+  f = open(fname+"_poly.txt", 'w')
+  p = np.where(slabels['endp']==True)
+  #p = np.transpose(np.concatenate(([p[0]], [p[2]], [p[2]])))
+  print ' ', p[0]
+  print ' ', p[1]
+  print ' ', p[2]
   f.close()
   return
 
