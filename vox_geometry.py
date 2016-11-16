@@ -46,8 +46,8 @@ while True:
   print ' ', culled
   if culled == 0: break
   
-# locate end points
-print "locate end points"
+# flag end points
+print "flag end points"
 print ' ', geo.end_points(slabels)
 
 # save cgal ploylines file

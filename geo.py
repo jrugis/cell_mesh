@@ -79,14 +79,36 @@ def end_points(slabels):
           slabels[i][j][k]['endp'] = True
   return endp
 
+# scan around an end point for lines not hit
+def scan_endp(lpnts, slabels):
+  i = lpnts[0][0]
+  j = lpnts[0][1]
+  k = lpnts[0][2]
+  lcnt = 0
+  if (  (slabels[i][j][k]['xyzlabel'][0] != "")
+    and (slabels[i][j][k]['xyzhit'][0] == False)): lcnt += 1
+  if (  (slabels[i][j][k]['xyzlabel'][1] != "")
+    and (slabels[i][j][k]['xyzhit'][1] == False)): lcnt += 1
+  if (  (slabels[i][j][k]['xyzlabel'][2] != "")
+    and (slabels[i][j][k]['xyzhit'][2] == False)): lcnt += 1
+  if (  (slabels[i-1][j][k]['xyzlabel'][0] != "")
+    and (slabels[i-1][j][k]['xyzhit'][0] == False)): lcnt += 1
+  if (  (slabels[i][j-1][k]['xyzlabel'][1] != "")
+    and (slabels[i][j-1][k]['xyzhit'][1] == False)): lcnt += 1
+  if (  (slabels[i][j][k-1]['xyzlabel'][2] != "")
+    and (slabels[i][j][k-1]['xyzhit'][2] == False)): lcnt += 1
+  print lcnt
+  #lpnts = np.append(pnts, [[0, 0, 0]], axis=0)
+  lpnts = [[]]
+  return lpnts
+
 # save cgal polylines file
 def save_polylines(fname, slabels):
   f = open(fname+"_poly.txt", 'w')
-  p = np.where(slabels['endp']==True)
-  #p = np.transpose(np.concatenate(([p[0]], [p[2]], [p[2]])))
-  print ' ', p[0]
-  print ' ', p[1]
-  print ' ', p[2]
+  endp = np.transpose(np.vstack(np.where(slabels['endp']==True)))
+  for p in endp:
+    lpnts = scan_endp(np.array([p]), slabels)
+    print lpnts
   f.close()
   return
 
