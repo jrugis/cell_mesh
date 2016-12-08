@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/python
 
 import numpy as np
-import libtiff as tf
 import scipy.misc as sm
+import libtiff as tf
 #import matplotlib.pyplot as plt
 #import sys
 
@@ -26,13 +26,14 @@ print images.shape
 
 icount = images.shape[0]    # image count in stack
 isize = images.shape[1]     # side dimension of images
-bsize = 1                 # decimation block size, MUST DIVIDE isize !!!
+bsize = 32                 # decimation block size, MUST DIVIDE isize !!!
 bcount = isize / bsize      # side dimension of reduced images
 imagesR = np.zeros((icount, bcount, bcount), dtype=np.uint8) # reduced images array
 print imagesR.shape
 
 for c in range(icount):     # reduce each image
   imagesR[c] = sm.imresize(images[c], (bcount, bcount), interp='nearest')
+
 #  print c+1
 #  print np.unique(images[c])
 #  print np.unique(imagesR[c])

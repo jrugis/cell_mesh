@@ -24,14 +24,14 @@ python create polylines file
   -> geometry/polylines.txt
 
 python: convert tiff stack to inr format
-  python tif2inr.py <- layers/cellsN.tif
-  -> mesh3d/cells.inr
+  python tif2inr.py <- layers/cellsNx.tif
+  -> mesh3d/cellsx.inr
 
 CGAL: create mesh with (or without) constraints
   ~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image_with_features mesh3d/cells.inr geometry/polylines.txt 0.6 0.6 0.4 0.8
       <- mesh3d/cells.inr, geometry/polylines.txt 
-  ~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image cells.inr 0.6 0.4 0.8
-      <- mesh3d/cells.inr
+  ~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image cellsx.inr 0.6 0.4 0.8
+      <- mesh3d/cellsx.inr
   -> out.mesh 
 
 medit: view the mesh
