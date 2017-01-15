@@ -3,6 +3,8 @@
 import numpy as np
 from operator import add
 
+#########################################################################################
+
 # line segment scan offset parameter array: 
 #    [segment base offset, segment XYZ direction, offset to next segment base]
 SEG_PARMS = [[[0,0,0],0,[1,0,0]],[[0,0,0],1,[0,1,0]],[[0,0,0],2,[0,0,1]],
@@ -36,6 +38,8 @@ def line_segs(voxels, slabels):
             slabels['xyzlabel'][i,j,k][n] = ''.join(map(str,vals))
   return segs
 
+#########################################################################################
+
 # how many line segments meet at this point?
 def line_count(i, j, k, slabels): 
   lcnt = 0
@@ -67,6 +71,8 @@ def end_points(slabels):
           slabels['endp'][i,j,k] = True
   return endp
 
+#########################################################################################
+
 # add point to line (recursive)
 def next_point(first, slabels, p, adj, lpnts):
   if not first and slabels['endp'][tuple(p)]:
@@ -97,4 +103,7 @@ def get_lines(slabels):
   for p in endp:
     scan_endp(p, lpnts, slabels)
   return lpnts
+
+#########################################################################################
+
 

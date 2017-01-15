@@ -36,7 +36,7 @@ voxels = np.swapaxes(np.concatenate((temp, images, temp)), 0, 2) # reorder to z-
 print "  voxel grid:", voxels.shape
 
 # label line segments
-print "label line segments (first pass)"
+print "label line segments"
 sl = [('xyzlabel', 'S8', 3), ('xyzhit', np.bool, 3), ('endp', np.bool)]
 slabels = np.zeros(voxels.shape, dtype=sl) # space point xyz label array
 total_segments = geo.line_segs(voxels, slabels)
@@ -56,8 +56,8 @@ print "flag end points"
 print ' ', geo.end_points(slabels), "points"
 
 #### temp vis for debug ###
-print "view end points and line segments"
-vis.view_lsegs(slabels)
+#print "view end points and line segments"
+#vis.view_lsegs(slabels)
 
 # get line geometry
 print "get line geometry"

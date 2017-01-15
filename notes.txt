@@ -4,6 +4,20 @@ http://perso.uclouvain.be/vincent.legat/teaching/data/meca2170-GmshCompanion.pdf
 
 There is a non documented header include/CGAL/IO/Complex_3_in_triangulation_3_to_vtk.h 
 
+~/Qt/
+
+Downloads/libQGLViewer
+qmake
+make
+sudo make install
+
+/Downloads/CGAL-4.9
+cmake-gui .
+make
+
+/Downloads/CGAL-4.9/demo
+cmake .
+make
 
 **********************************************
 **********************************************
