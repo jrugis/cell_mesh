@@ -3,7 +3,7 @@
 import numpy as np
 
 mdir = "mesh3d/"
-fname = "out_p6-p4-p8"
+fname = "out_p6-p4-p8_poly"
 
 ####################
 print "input mesh data file"
@@ -59,7 +59,7 @@ for i, f in enumerate(fl):
 
   f2.write("POINTS "+str(pcount)+" float\n")
   for v in xyz:
-    f2.write(str(v[0]-35.33)+' '+str(35.33-v[1])+' '+str(11.59-v[2])+'\n')
+    f2.write(str(v[0]-35.33)+' '+str(35.33-v[1])+' '+str(12.36-v[2])+'\n')
 
   f2.write("CELLS "+str(lc[i])+" "+str(lc[i]*4)+"\n")
   for v in faces:
@@ -84,7 +84,7 @@ for i, f in enumerate(vl):
 
   f2.write("POINTS "+str(pcount)+" float\n")
   for v in xyz:
-    f2.write(str(v[0]-35.33)+' '+str(35.33-v[1])+' '+str(11.59-v[2])+'\n')
+    f2.write(str(v[0]-35.33)+' '+str(35.33-v[1])+' '+str(12.36-v[2])+'\n')
 
   f2.write("CELLS "+str(vc[i])+" "+str(vc[i]*5)+"\n")
   for v in vols:

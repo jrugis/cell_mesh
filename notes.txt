@@ -44,14 +44,14 @@ python: convert tiff stack to inr format
   -> mesh3d/cellsx.inr
 
 CGAL: create mesh with (or without) constraints
-  ~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image_with_features mesh3d/cells.inr geometry/polylines.txt 0.6 0.6 0.4 0.8
+  ~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image_with_features mesh3d/cells8.inr geometry/cellsN8R_poly.txt 0.6 0.6 0.4 0.8
       <- mesh3d/cells.inr, geometry/polylines.txt 
-  ~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image cellsx.inr 0.6 0.4 0.8
+  ~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image mesh3d/cells8.inr 0.6 0.4 0.8
       <- mesh3d/cellsx.inr
   -> out.mesh 
 
 medit: view the mesh
-  ~/Downloads/medit-2.3-linux out.mesh
+  ~/Downloads/medit-linux mesh3d/out_p6-p4-p8_poly.mesh
 
 paraview: check mesh and polylines alignment  
   python mesh2vtk.py
