@@ -37,16 +37,17 @@ def save_poly(fname, lines):
   for line in lines:
     points = calc_points(line)
     #spoints = bspline(points, n=points.shape[0], degree=20)
+    ##m = len(points)
     m = len(points)/2
     if m<4: continue
     kx = 3
-    #if(m>3): kx = 3
-    #else: kx = m-1
+    ##if(m>3): kx = 3
+    ##else: kx = m-1
     wx = np.ones(len(points))
     wx[0] = wx[-1] = 100
     tck,u=si.splprep(np.transpose(points),w=wx,k=kx,s=10)
-    #m /= 2
-    #if(m<4) : m=4
+    ##m /= 2
+    ##if(m<4) : m=4
     spoints = np.transpose([si.splev(np.linspace(0,1,m),tck)])
     f.write("%2d " % m) 
     for spoint in spoints:
