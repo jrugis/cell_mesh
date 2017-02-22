@@ -24,12 +24,37 @@ tris = unique(tris,'rows','stable'); % remove outer face duplicates
 %**************************************************************************
 % separate the cells
 cells = transpose(unique(tris(:,4)));
-cell_tris = cell(max(cells),1); % pre-allocate
+ncells = max(cells),1;
+cell_tris = cell(ncells); % pre-allocate
+cell_edges = cell(ncells); % pre-allocate
 for c = cells
     fprintf('separate cell: %d \n',c);
     temp = tris((tris(:,4) == c),1:3);
     cell_tris{c} = unifyMeshNormals(temp,verts,'alignTo','out');
+    cell_edges{c} = meshEdges(cell_tris{c});
 end
+
+%**************************************************************************
+% create common edge array for each cell pair
+common_edges = cell(0,1);
+for i = (1:ncells-1)
+    for j = (i+1:ncells)
+        fprintf('%d:%d\n',i,j);
+        common_edges{size(common_edges,1)+1,1} = ...
+            cell_edges{i}(ismember(cell_edges{i},cell_edges{j},'rows'),:);
+    end
+end
+
+hold on;
+for ee = transpose(common_edges{7})
+    A = verts(ee,:);
+    plot3(A(:,1),A(:,2),A(:,3));
+end
+hold off;
+
+%*********
+return;
+%*********
 
 %**************************************************************************
 % iterative cell smoothing

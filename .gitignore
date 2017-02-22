@@ -9,5 +9,11 @@ stlread*
 tubes.stl
 unifyMeshNormals*
 vertex_neighbors*
+formatMeshOutput*
+meshEdges*
+meshFace*
+meshFaceEdges*
+meshFaceNumber*
+parseMeshData*
 test/*
 
