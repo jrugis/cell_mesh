@@ -24,7 +24,7 @@ tris = unique(tris,'rows','stable'); % remove outer face duplicates
 %**************************************************************************
 % separate the cells
 cells = transpose(unique(tris(:,4)));
-ncells = max(cells),1;
+ncells = max(cells);
 cell_tris = cell(ncells); % pre-allocate
 cell_edges = cell(ncells); % pre-allocate
 for c = cells

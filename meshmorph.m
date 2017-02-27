@@ -23,6 +23,8 @@ fclose(fid);
 fprintf('  vertices: %d\n',Vn);
 
 %**************************************************************************
+% identify mesh connectivity
+%**************************************************************************
 % create labelled faces
 Fn = ntris/2;
 Fv = zeros(Fn,3); % faces
@@ -47,6 +49,8 @@ fprintf('     edges: %d\n',En);
 %temp1 = unique(Efn);
 %temp2 = hist(Efn,unique(Efn));
 
+%**************************************************************************
+% find seams
 %**************************************************************************
 % find seam edges (i.e. high valence edges) and
 %      seam end-points (i.e. high valence vertices in seam)
@@ -76,8 +80,11 @@ fprintf('end-points: %d\n',size(iVhv,1));
 %temp2 = hist(Ven,unique(Ven));
 % check results: plot some high valence seam vertices
 %hold on;
-%Vhv = V(Ven==5,:);
+%Vhv = V(Ven>2,:);
 %scatter3(Vhv(:,1),Vhv(:,2),Vhv(:,3));
+hold on;
+Vhv = V(iVhv,:);
+scatter3(Vhv(:,1),Vhv(:,2),Vhv(:,3));
 %hold off;
 
 %**************************************************************************
@@ -105,6 +112,77 @@ fprintf('     seams: %d\n',n);
 %    scatter3(A(:,1),A(:,2),A(:,3));
 %end
 %hold off;
+
+%**************************************************************************
+% find cells
+%**************************************************************************
+% separate the cells
+tris = unique(tris,'rows','stable'); % remove outer face duplicates
+cells = transpose(unique(tris(:,4)));
+ncells = max(cells);
+cell_tris = cell(ncells); % pre-allocate
+cell_edges = cell(ncells); % pre-allocate
+fprintf('separate cell:');
+for c = cells
+    fprintf(' %d',c);
+    temp = tris((tris(:,4) == c),1:3);
+    cell_tris{c} = unifyMeshNormals(temp,V,'alignTo','out');
+    cell_edges{c} = meshEdges(cell_tris{c});
+end
+fprintf('\n');
+
+%**************************************************************************
+% iterative smoothing
+%**************************************************************************
+fprintf('smoothing iteration:');
+for i = 1:100           % 1:100
+    fprintf(' %d',i);
+    % cell smoothing
+    for c = cells  
+        FV = struct('faces',cell_tris{c},'vertices',V);
+        FVs = smoothpatch(FV,1,5,0.01);
+        V = FVs.vertices;
+    end
+    % seam smoothing
+    for seam = transpose(seams)
+        seamn = size(seam{1},2);
+        if seamn < 3; continue; end
+        sverts = V(seam{1},:);
+        if seamn < 5
+            sverts2 = sverts;
+            sverts2(2:end-1,:) = movmean(sverts,3,'Endpoints','discard');
+        else
+            sverts2 = sgolayfilt(sverts,3,5,0.5*ones(5,1));
+        end
+        V(transpose(seam{1}),:) = sverts2;
+        %spmak
+        %fnval
+        %interp3
+        %sgolayfilt
+    end
+end
+fprintf('\n');
+% check results: plot seams 
+%hold on;
+%plot3(sverts(:,1),sverts(:,2),sverts(:,3));
+%plot3(sverts2(:,1),sverts2(:,2),sverts2(:,3));
+%hold off;
+
+%**************************************************************************
+% check results: plot cells and lumen 
+hold on;
+fprintf('plot cell:');
+plot_mesh(cell_tris{2},V,5);
+%for c = cells
+%    fprintf(' %d',c);
+%    plot_mesh(cell_tris{c},V,c);
+%end
+fprintf('\n');
+fprintf('plot lumen\n');
+%[Ft,Vt] = stlread('../meshes/real/blender/tubes.stl');
+%plot_mesh(Ft,Vt,1);
+hold off;
+
 
 %**************************************************************************
 %**************************************************************************
