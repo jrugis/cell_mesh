@@ -15,5 +15,6 @@ meshFace*
 meshFaceEdges*
 meshFaceNumber*
 parseMeshData*
+vertex_neighbours*
 test/*
 

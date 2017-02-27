@@ -93,7 +93,7 @@ for iv = transpose(iVhv) % for each seam end-point
         %fprintf('  seam edge: %d\n',r);
         n = size(seams,1)+1;
         seams{n,1} = [iv];
-        [seams{n,1}, Ehit] = SeamWalk(seams{n,1},iv,r,iVhv,Ehit,Ehv);
+        [seams{n,1}, Ehit] = seamwalk(seams{n,1},iv,r,iVhv,Ehit,Ehv);
 
     end
 end

@@ -6,7 +6,7 @@
 % Ehit - flags to mark seam edge already hit
 % Evh  - all of the seam edges
 %
-function [seam, Ehit] = SeamWalk(seam,iv,r,iVhv,Ehit,Ehv)
+function [seam, Ehit] = seamwalk(seam,iv,r,iVhv,Ehit,Ehv)
 edge = Ehv(r,:); % note: this edge already flagged as hit
 if edge(1)==iv % get the other end of the edge
     iv = edge(2);
@@ -19,6 +19,6 @@ if any(iVhv==iv) % at end-point?
 end 
 [r, c] = find(Ehv==iv & ~ismember(Ehv,edge,'rows')); % find the next edge
 Ehit(r) = 1; % flag edge as hit
-[seam, Ehit] = SeamWalk(seam,iv,r,iVhv,Ehit,Ehv); % keep walking!
+[seam, Ehit] = seamwalk(seam,iv,r,iVhv,Ehit,Ehv); % keep walking!
 
 
