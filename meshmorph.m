@@ -62,7 +62,7 @@ Ven = transpose(sum(Ehv(:)==(1:Vn))); % seam edge valence per end-point
 %    Ehv(row,:) = [];  % delete singleton edges
 %end
 fprintf('seam edges: %d\n',Ehvn);
-iVhv = find(Ven>2); % indices of seam end-points
+iVhv = find(Ven==1 | Ven>2); % indices of seam end-points, incl singletons
 fprintf('end-points: %d\n',size(iVhv,1));
 
 % check results: plot seams
@@ -81,18 +81,30 @@ fprintf('end-points: %d\n',size(iVhv,1));
 %hold off;
 
 %**************************************************************************
-% recursive seam edge walking
-
+% find seam vertices starting from each seam end-point
+seams = {};
 Ehit = zeros(Ehvn,1); % edge hit flags
 for iv = transpose(iVhv) % for each seam end-point
-    [row col] = find(Ehv==iv); % seam edge fan
-    for r = row % for each seam edge
-        if Ehit==1; continue; end;
-        
-    end
-    break;
-end
+    %fprintf('end point: %d\n',iv);
+    [row, col] = find(Ehv==iv); % seam edge fan
+    for r = transpose(row) % for each seam edge around end-point
+        if Ehit(r)==1; continue; end;
+        Ehit(r) = 1;
+        %fprintf('  seam edge: %d\n',r);
+        n = size(seams,1)+1;
+        seams{n,1} = [iv];
+        [seams{n,1}, Ehit] = SeamWalk(seams{n,1},iv,r,iVhv,Ehit,Ehv);
 
+    end
+end
+fprintf('     seams: %d\n',n);
+% check results: plot seams
+%hold on;
+%for iv = seams{1} 
+%    A = V(iv,:);
+%    scatter3(A(:,1),A(:,2),A(:,3));
+%end
+%hold off;
 
 %**************************************************************************
 %**************************************************************************

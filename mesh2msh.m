@@ -36,24 +36,24 @@ end
 
 %**************************************************************************
 % create common edge array for each cell pair
-common_edges = cell(0,1);
-for i = (1:ncells-1)
-    for j = (i+1:ncells)
-        fprintf('%d:%d\n',i,j);
-        common_edges{size(common_edges,1)+1,1} = ...
-            cell_edges{i}(ismember(cell_edges{i},cell_edges{j},'rows'),:);
-    end
-end
-
-hold on;
-for ee = transpose(common_edges{7})
-    A = verts(ee,:);
-    plot3(A(:,1),A(:,2),A(:,3));
-end
-hold off;
+%common_edges = cell(0,1);
+%for i = (1:ncells-1)
+%    for j = (i+1:ncells)
+%        fprintf('%d:%d\n',i,j);
+%        common_edges{size(common_edges,1)+1,1} = ...
+%            cell_edges{i}(ismember(cell_edges{i},cell_edges{j},'rows'),:);
+%   end
+%end
+%
+%hold on;
+%or ee = transpose(common_edges{7})
+%    A = verts(ee,:);
+%    plot3(A(:,1),A(:,2),A(:,3));
+%end
+%hold off;
 
 %*********
-return;
+%return;
 %*********
 
 %**************************************************************************
