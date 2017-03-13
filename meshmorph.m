@@ -4,7 +4,7 @@
 % Output a separate msh file for each cell.
 %
 mdir = 'mesh3d/';
-fname = 'out_p6-p4-p8';
+fname = 'out_N4_p3-p2-p4';
 
 %**************************************************************************
 % input from multi-cell mesh file
@@ -54,20 +54,20 @@ fprintf('     edges: %d\n',En);
 %**************************************************************************
 % find seam edges (i.e. high valence edges) and
 %      seam end-points (i.e. high valence vertices in seam)
-Ehv = Ev(Efn>2,:); % seam edges
-Ehvn = size(Ehv,1);
-Ven = transpose(sum(Ehv(:)==(1:Vn))); % seam edge valence per end-point
-%while true
-%    Ven = transpose(sum(Ehv(:)==(1:Vn)));
-%    isingletons = find(Ven==1); % check for singleton vertices
-%    if isempty(isingletons); break; end;
-%    fprintf('deleting singlestons: %d\n',size(isingletons,1));
-%    [row col] = find(Ehv==isingletons);
-%    Ehv(row,:) = [];  % delete singleton edges
-%end
-fprintf('seam edges: %d\n',Ehvn);
-iVhv = find(Ven==1 | Ven>2); % indices of seam end-points, incl singletons
-fprintf('end-points: %d\n',size(iVhv,1));
+%Ehv = Ev(Efn>2,:); % seam edges
+%Ehvn = size(Ehv,1);
+%Ven = transpose(sum(Ehv(:)==(1:Vn))); % seam edge valence per end-point
+% %while true
+% %   Ven = transpose(sum(Ehv(:)==(1:Vn)));
+% %   isingletons = find(Ven==1); % check for singleton vertices
+% %   if isempty(isingletons); break; end;
+% %   fprintf('deleting singlestons: %d\n',size(isingletons,1));
+% %   [row col] = find(Ehv==isingletons);
+% %   Ehv(row,:) = [];  % delete singleton edges
+% %end
+%fprintf('seam edges: %d\n',Ehvn);
+%iVhv = find(Ven==1 | Ven>2); % indices of seam end-points, incl singletons
+%fprintf('end-points: %d\n',size(iVhv,1));
 
 % check results: plot seams
 %hold on;
@@ -82,29 +82,29 @@ fprintf('end-points: %d\n',size(iVhv,1));
 %hold on;
 %Vhv = V(Ven>2,:);
 %scatter3(Vhv(:,1),Vhv(:,2),Vhv(:,3));
-hold on;
-Vhv = V(iVhv,:);
-scatter3(Vhv(:,1),Vhv(:,2),Vhv(:,3));
+%hold on;
+%Vhv = V(iVhv,:);
+%scatter3(Vhv(:,1),Vhv(:,2),Vhv(:,3));
 %hold off;
 
 %**************************************************************************
 % find seam vertices starting from each seam end-point
-seams = {};
-Ehit = zeros(Ehvn,1); % edge hit flags
-for iv = transpose(iVhv) % for each seam end-point
-    %fprintf('end point: %d\n',iv);
-    [row, col] = find(Ehv==iv); % seam edge fan
-    for r = transpose(row) % for each seam edge around end-point
-        if Ehit(r)==1; continue; end;
-        Ehit(r) = 1;
-        %fprintf('  seam edge: %d\n',r);
-        n = size(seams,1)+1;
-        seams{n,1} = [iv];
-        [seams{n,1}, Ehit] = seamwalk(seams{n,1},iv,r,iVhv,Ehit,Ehv);
-
-    end
-end
-fprintf('     seams: %d\n',n);
+%seams = {};
+%Ehit = zeros(Ehvn,1); % edge hit flags
+%for iv = transpose(iVhv) % for each seam end-point
+%    %fprintf('end point: %d\n',iv);
+%    [row, col] = find(Ehv==iv); % seam edge fan
+%    for r = transpose(row) % for each seam edge around end-point
+%        if Ehit(r)==1; continue; end;
+%        Ehit(r) = 1;
+%        %fprintf('  seam edge: %d\n',r);
+%        n = size(seams,1)+1;
+%        seams{n,1} = [iv];
+%        [seams{n,1}, Ehit] = seamwalk(seams{n,1},iv,r,iVhv,Ehit,Ehv);
+%
+%    end
+%end
+%fprintf('     seams: %d\n',n);
 % check results: plot seams
 %hold on;
 %for iv = seams{1} 
@@ -135,31 +135,50 @@ fprintf('\n');
 % iterative smoothing
 %**************************************************************************
 fprintf('smoothing iteration:');
-for i = 1:100           % 1:100
+%for seam = transpose(seams)
+%    seamn = size(seam{1},2);
+%    if seamn < 3; continue; end
+%    sverts = V(seam{1},:);
+%    if seamn < 5
+%        sverts2 = sverts;
+%        sverts2(2:end-1,:) = movmean(sverts,3,'Endpoints','discard');
+%    else
+%        sverts2 = sgolayfilt(sverts,3,5,0.5*ones(5,1));
+%    end
+%    V(transpose(seam{1}),:) = sverts2;
+%end
+for i = 1:10           % 1:100
     fprintf(' %d',i);
     % cell smoothing
-    for c = cells  
+    for c = cells
+        if c > 1
+            break;
+        end
+        % save mesh in progress
+        ncell_tris = size(cell_tris{c},1);
+        fid = fopen(strcat(mdir,'morph/',fname,sprintf('-N%d_%d',c,i-1),'.msh'),'w');
+        fprintf(fid,'$MeshFormat\n');
+        fprintf(fid,'2.2 0 8\n');
+        fprintf(fid,'$EndMeshformat\n');
+        fprintf(fid,'$Nodes\n');
+        fprintf(fid,'%d\n',Vn);
+        for n = 1:Vn
+            fprintf(fid,'%d %f %f %f\n',n,V(n,:));
+        end
+        fprintf(fid,'$EndNodes\n');
+        fprintf(fid,'$Elements\n');
+        fprintf(fid,'%d\n',ncell_tris);
+        for n = 1:ncell_tris
+            fprintf(fid,'%d 2 2 0 %d %d %d %d\n',n,c,cell_tris{c}(n,:));
+        end
+        fprintf(fid,'$EndElements\n');
+        fclose(fid);
+        % smooth the cell mesh
         FV = struct('faces',cell_tris{c},'vertices',V);
-        FVs = smoothpatch(FV,1,5,0.01);
+        FVs = smoothpatch(FV,1,5,0.1);  % (FV,1,5,0.01)
         V = FVs.vertices;
     end
     % seam smoothing
-    for seam = transpose(seams)
-        seamn = size(seam{1},2);
-        if seamn < 3; continue; end
-        sverts = V(seam{1},:);
-        if seamn < 5
-            sverts2 = sverts;
-            sverts2(2:end-1,:) = movmean(sverts,3,'Endpoints','discard');
-        else
-            sverts2 = sgolayfilt(sverts,3,5,0.5*ones(5,1));
-        end
-        V(transpose(seam{1}),:) = sverts2;
-        %spmak
-        %fnval
-        %interp3
-        %sgolayfilt
-    end
 end
 fprintf('\n');
 % check results: plot seams 
@@ -169,20 +188,46 @@ fprintf('\n');
 %hold off;
 
 %**************************************************************************
-% check results: plot cells and lumen 
-hold on;
+% output a msh file for each cell
+for c = cells
+    fprintf('output msh cell: %d  ',c);
+    ncell_tris = size(cell_tris{c},1);
+    fprintf('  triangles: %d\n',ncell_tris);
+    fid = fopen(strcat(mdir,fname,sprintf('-%d',c),'.msh'),'w');
+    fprintf(fid,'$MeshFormat\n');
+    fprintf(fid,'2.2 0 8\n');
+    fprintf(fid,'$EndMeshformat\n');
+    fprintf(fid,'$Nodes\n');
+    fprintf(fid,'%d\n',Vn);
+    for i = 1:Vn
+        fprintf(fid,'%d %f %f %f\n',i,V(i,:));
+    end
+    fprintf(fid,'$EndNodes\n');
+    fprintf(fid,'$Elements\n');
+    fprintf(fid,'%d\n',ncell_tris);
+    for i = 1:ncell_tris
+        fprintf(fid,'%d 2 2 0 %d %d %d %d\n',i,c,cell_tris{c}(i,:));
+    end
+    fprintf(fid,'$EndElements\n');
+    fclose(fid);
+end
+
+%**************************************************************************
+% check results: plot cells and lumen
 fprintf('plot cell:');
-plot_mesh(cell_tris{2},V,5);
-%for c = cells
-%    fprintf(' %d',c);
-%    plot_mesh(cell_tris{c},V,c);
-%end
+%hold on;
+%plot_mesh(cell_tris{2},V,5);
+%plot_mesh(cell_tris{5},V,6);
+hold on;
+for c = cells
+    fprintf(' %d',c);
+    plot_mesh(cell_tris{c},V,c);
+end
 fprintf('\n');
 fprintf('plot lumen\n');
-%[Ft,Vt] = stlread('../meshes/real/blender/tubes.stl');
-%plot_mesh(Ft,Vt,1);
+[Ft,Vt] = stlread('../meshes/real/blender/tubes.stl');
+plot_mesh(Ft,Vt,1);
 hold off;
-
 
 %**************************************************************************
 %**************************************************************************

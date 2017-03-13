@@ -4,10 +4,12 @@ import numpy as np
 
 fdir = "layers/"
 ##fname = "cellsN"
-fname = "cellsN8R"
+#fname = "cellsN8R"
+fname = "cellsN4R"
 mdir = "mesh3d/"
 ##mname = "cells.inr"
-mname = "cells8.inr"
+#mname = "cells8.inr"
+mname = "cells4.inr"
 
 # get the reduced image stack
 print "load image stack"
@@ -42,8 +44,10 @@ header += "TYPE=unsigned fixed\n"
 header += "PIXSIZE=8 bits\n"
 header += "SCALE=2**0\n"
 header += "CPU=pc\n"
-header += "VX=0.556\n"
-header += "VY=0.556\n"
+#header += "VX=0.556\n" # for 8R
+#header += "VY=0.556\n" 
+header += "VX=0.278\n" # for 4R
+header += "VY=0.278\n"
 header += "VZ=0.798\n"
 header += "#GEOMETRY=CARTESIAN\n"
 for i in range(252-len(header)):

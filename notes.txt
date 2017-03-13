@@ -35,10 +35,12 @@ python: reduce image stack (and check for errors)
   python voxels.py <- layers/cellsN.tif
   -> layers/cellsN8R.tif
 
+***************
 python create polylines file
   python vox_geometry.py <- layers/cellsN8R.tif
   -> geometry/polylines.txt
 
+***************
 python: convert tiff stack to inr format
   python tif2inr.py <- layers/cellsNx.tif
   -> mesh3d/cellsx.inr
@@ -57,6 +59,22 @@ paraview: check mesh and polylines alignment
   python mesh2vtk.py
   python poly2vtk.py
 
+matlab: create smooth msh files from mesh file
+  meshmorph.m <- mesh3d/out_N4_p3-p2-p4.mesh
+  -> mesh3d/out_N4_p3-p2-p4-x.msh
+
+gmsh: 3D mesh the msh files
+  ~/Downloads/gmsh-2.16.0-Linux/bin/gmsh out_N4_p3-p2-p4-x.msh
+  Geometry | Elementary entities | Add | Volume
+  Mesh | 3D
+  Mesh | Optimize 3D
+  File | Save As | out_N4_p3-p2-p4-xtet.msh
+    Save all (ignore physical groups)
+
+python: add dns to msh files
+  python label_tubes_in_cells.py <- tubes.msh
+  -> out_N4_p3-p2-p4-xtet.msh
+  
 **********************************************
 **********************************************
 TESTING
