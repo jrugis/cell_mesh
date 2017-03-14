@@ -5,6 +5,8 @@
 %
 mdir = 'mesh3d/';
 fname = 'out_N4_p3-p2-p4';
+%
+iterations = 10; % number of smoothing iterations
 
 %**************************************************************************
 % input from multi-cell mesh file
@@ -120,21 +122,26 @@ fprintf('     edges: %d\n',En);
 tris = unique(tris,'rows','stable'); % remove outer face duplicates
 cells = transpose(unique(tris(:,4)));
 ncells = max(cells);
-cell_tris = cell(ncells); % pre-allocate
-cell_edges = cell(ncells); % pre-allocate
-fprintf('separate cell:');
+cell_tris = cell(ncells,1);            % mesh triangles
+cell_edges = cell(ncells,1);           % mesh edges
+cell_vol = cell(ncells,iterations+1);  % volume 
+cell_surf = cell(ncells,iterations+1); % surface area
+cell_cent = cell(ncells,iterations+1); % centroid
 for c = cells
-    fprintf(' %d',c);
+    fprintf('separate cell: %d',c);
     temp = tris((tris(:,4) == c),1:3);
     cell_tris{c} = unifyMeshNormals(temp,V,'alignTo','out');
     cell_edges{c} = meshEdges(cell_tris{c});
+    cell_surf{c,1} = meshSurfaceArea(V,cell_edges{c},cell_tris{c});
+    [cell_cent{c,1},cell_vol{c,1}] = centroid(V,cell_tris{c});
+    fprintf('    volume: %4.2f  surface area: %4.2f\n',...
+        cell_vol{c,1},cell_surf{c,1});
 end
-fprintf('\n');
 
 %**************************************************************************
 % iterative smoothing
 %**************************************************************************
-fprintf('smoothing iteration:');
+%fprintf('smoothing iteration:');
 %for seam = transpose(seams)
 %    seamn = size(seam{1},2);
 %    if seamn < 3; continue; end
@@ -147,40 +154,58 @@ fprintf('smoothing iteration:');
 %    end
 %    V(transpose(seam{1}),:) = sverts2;
 %end
-for i = 1:10           % 1:100
-    fprintf(' %d',i);
+for i = 1:iterations
+    fprintf('iteration: %d\n',i);
     % cell smoothing
     for c = cells
-        if c > 1
-            break;
-        end
+        %if c > 1
+        %    break;
+        %end
         % save mesh in progress
-        ncell_tris = size(cell_tris{c},1);
-        fid = fopen(strcat(mdir,'morph/',fname,sprintf('-N%d_%d',c,i-1),'.msh'),'w');
-        fprintf(fid,'$MeshFormat\n');
-        fprintf(fid,'2.2 0 8\n');
-        fprintf(fid,'$EndMeshformat\n');
-        fprintf(fid,'$Nodes\n');
-        fprintf(fid,'%d\n',Vn);
-        for n = 1:Vn
-            fprintf(fid,'%d %f %f %f\n',n,V(n,:));
-        end
-        fprintf(fid,'$EndNodes\n');
-        fprintf(fid,'$Elements\n');
-        fprintf(fid,'%d\n',ncell_tris);
-        for n = 1:ncell_tris
-            fprintf(fid,'%d 2 2 0 %d %d %d %d\n',n,c,cell_tris{c}(n,:));
-        end
-        fprintf(fid,'$EndElements\n');
-        fclose(fid);
+        %ncell_tris = size(cell_tris{c},1);
+        %fid = fopen(strcat(mdir,'morph/',fname,
+        %    sprintf('-N%d_%d',c,i-1),'.msh'),'w');
+        %fprintf(fid,'$MeshFormat\n');
+        %fprintf(fid,'2.2 0 8\n');
+        %fprintf(fid,'$EndMeshformat\n');
+        %fprintf(fid,'$Nodes\n');
+        %fprintf(fid,'%d\n',Vn);
+        %for n = 1:Vn
+        %    fprintf(fid,'%d %f %f %f\n',n,V(n,:));
+        %end
+        %fprintf(fid,'$EndNodes\n');
+        %fprintf(fid,'$Elements\n');
+        %fprintf(fid,'%d\n',ncell_tris);
+        %for n = 1:ncell_tris
+        %    fprintf(fid,'%d 2 2 0 %d %d %d %d\n',n,c,cell_tris{c}(n,:));
+        %end
+        %fprintf(fid,'$EndElements\n');
+        %fclose(fid);
+
         % smooth the cell mesh
         FV = struct('faces',cell_tris{c},'vertices',V);
         FVs = smoothpatch(FV,1,5,0.1);  % (FV,1,5,0.01)
         V = FVs.vertices;
+        fprintf('cell: %d',c);
+
+        % adjust the volume (using simple sphere volume formula)
+        [ccent,cvol] = centroid(V,cell_tris{c});
+        %fprintf('  center: %4.2f  %4.2f %4.2f\n',ccent(:));
+        mult = nthroot(((cell_vol{c,1}-cvol)/4.189),3)/cell_vol{c,1};
+        %fprintf('  %4.8f  ',mult);
+        cellVi = unique(cell_tris{c});
+        V(cellVi,:) = V(cellVi,:) + mult*(V(cellVi,:)-ccent);
+
+        % store the volume, surface area and centroid
+        cell_vol{c,i+1} = meshVolume(V,cell_edges{c},cell_tris{c});
+        cell_surf{c,i+1} = meshSurfaceArea(V,cell_edges{c},cell_tris{c});
+        cell_cent{c,i+1} = ccent;
+        fprintf('    volume: %4.2f  surface area: %4.2f\n',...
+            cell_vol{c,i+1},cell_surf{c,i+1});
     end
     % seam smoothing
 end
-fprintf('\n');
+%fprintf('\n');
 % check results: plot seams 
 %hold on;
 %plot3(sverts(:,1),sverts(:,2),sverts(:,3));
@@ -213,11 +238,28 @@ for c = cells
 end
 
 %**************************************************************************
+% save cell morph stats
+csvwrite(strcat(mdir,'cell_vol.csv'), cell2mat(cell_vol));
+csvwrite(strcat(mdir,'cell_surf.csv'), cell2mat(cell_surf));
+csvwrite(strcat(mdir,'cell_cent.csv'), cell2mat(cell_cent));
+% plot cell morph stats
+%A = transpose(cell2mat(cell_vol));
+%A = transpose(cell2mat(cell_cent));
+%A = transpose(cell2mat(cell_surf));
+%hold on;
+%for i = 1:7
+%    plot(100*(A(:,i)-A(1,i))/A(1,i));
+%end
+%hold off;
+
+%**************************************************************************
 % check results: plot cells and lumen
 fprintf('plot cell:');
+
 %hold on;
 %plot_mesh(cell_tris{2},V,5);
 %plot_mesh(cell_tris{5},V,6);
+
 hold on;
 for c = cells
     fprintf(' %d',c);
@@ -229,6 +271,6 @@ fprintf('plot lumen\n');
 plot_mesh(Ft,Vt,1);
 hold off;
 
-%**************************************************************************
+
 %**************************************************************************
 %**************************************************************************
