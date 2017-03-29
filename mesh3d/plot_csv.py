@@ -4,7 +4,10 @@ import csv
 import matplotlib.pyplot as plt
 import numpy as np
 
-fname = 'cell_vol'
+#fname = 'cell_vol'
+fname = 'cell_surf'
+
+plt.rcParams.update({'font.size': 14})
 fig, ax = plt.subplots()
 
 f = open(fname +'.csv','rb')
@@ -17,7 +20,10 @@ for row in d:
   i = i+1
 f.close()
 
-legend = ax.legend()
+legend = ax.legend(loc=9,prop={'size':12})
+
+#plt.title('Cell Volume')
+plt.title('Cell Surface Area')
 
 plt.xlabel('smoothing iteration')
 plt.ylabel('percent change')
