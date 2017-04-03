@@ -1,12 +1,22 @@
 %**************************************************************************
 % meshmorph.m
 % Iteratively smooth a multi-cell mesh file. 
-% Output a separate msh file for each cell.
+% Output a separate gmsh .msh file for each cell.
 %
 mdir = 'mesh3d/';
 fname = 'out_N4_p3-p2-p4';
 %
 iterations = 10; % number of smoothing iterations
+
+%**************************************************************************
+% paths to 3rd party matlab toolboxs
+path(path, '~/Downloads/alecjacobson-gptoolbox-00c124c/mesh');
+path(path, '~/Downloads/geom3d/meshes3d');
+path(path, '~/Downloads/geom3d/geom3d');
+path(path, '~/Downloads/unifyMeshNormals');
+path(path, '~/Downloads/smoothpatch_version1b');
+path(path, '~/Downloads/toolbox_graph/toolbox_graph/');
+path(path, '~/Downloads/toolbox_graph/toolbox_graph/toolbox/');
 
 %**************************************************************************
 % input from multi-cell mesh file
@@ -56,16 +66,28 @@ cell_tris = cell(ncells,1);            % mesh triangles
 cell_edges = cell(ncells,1);           % mesh edges
 cell_vol = cell(ncells,iterations+1);  % volume 
 cell_surf = cell(ncells,iterations+1); % surface area
-cell_cent = cell(ncells,iterations+1); % centroid
+cell_curv = cell(ncells,iterations+1); % curvature
 for c = cells
     fprintf('separate cell: %d',c);
     temp = tris((tris(:,4) == c),1:3);
     cell_tris{c} = unifyMeshNormals(temp,V,'alignTo','out');
     cell_edges{c} = meshEdges(cell_tris{c});
     cell_surf{c,1} = meshSurfaceArea(V,cell_edges{c},cell_tris{c});
-    [cell_cent{c,1},cell_vol{c,1}] = centroid(V,cell_tris{c});
-    fprintf('    volume: %4.2f  surface area: %4.2f\n',...
+    [ccent,cell_vol{c,1}] = centroid(V,cell_tris{c});
+    fprintf('    volume: %4.2f  surface area: %4.2f',...
         cell_vol{c,1},cell_surf{c,1});
+    % compute and store the curvature
+    options.curvature_smoothing = 0;
+    options.verb = 0;
+    [Umin,Umax,Cmin,Cmax,Cmean,Cgauss,Normal] = ...
+        compute_curvature(transpose(V),...
+        transpose(cell_tris{c}),options);
+    cell_curv{c,1} = Cmean(unique(cell_tris{c}));
+    fprintf('  curvature std: %4.4f\n',std(cell_curv{c,1}));
+    % check mesh Euler characteristic
+    %if size(cell_curv{c,1})-size(cell_edges{c})+size(cell_tris{c}) == 2
+    %    fprintf('ok\n');
+    %end
 end
 
 %**************************************************************************
@@ -113,11 +135,25 @@ for i = 1:iterations
         % store the volume, surface area and centroid
         cell_vol{c,i+1} = meshVolume(V,cell_edges{c},cell_tris{c});
         cell_surf{c,i+1} = meshSurfaceArea(V,cell_edges{c},cell_tris{c});
-        cell_cent{c,i+1} = ccent;
-        fprintf('    volume: %4.2f  surface area: %4.2f\n',...
+        fprintf('    volume: %4.2f  surface area: %4.2f',...
             cell_vol{c,i+1},cell_surf{c,i+1});
+
+        % compute and store the curvature
+        [Umin,Umax,Cmin,Cmax,Cmean,Cgauss,Normal] = ...
+            compute_curvature(transpose(V),...
+            transpose(cell_tris{c}),options);
+        cell_curv{c,i+1} = Cmean(unique(cell_tris{c}));
+        fprintf('  curvature std: %4.4f\n',std(cell_curv{c,i+1}));
     end
 end
+% plot curvature histogram
+%figure;
+%hold on;
+%histogram(cell_curv{1,1},...
+%    'Normalization','probability','NumBins',100,'Binlimits',[-0.5,0.5]);
+%histogram(cell_curv{1,11},...
+%    'Normalization','probability','NumBins',100,'Binlimits',[-0.5,0.5]);
+%hold off;
 
 %**************************************************************************
 % output a msh file for each cell
@@ -148,16 +184,6 @@ end
 % save cell morph stats
 csvwrite(strcat(mdir,'cell_vol.csv'), cell2mat(cell_vol));
 csvwrite(strcat(mdir,'cell_surf.csv'), cell2mat(cell_surf));
-csvwrite(strcat(mdir,'cell_cent.csv'), cell2mat(cell_cent));
-% plot cell morph stats
-%A = transpose(cell2mat(cell_vol));
-%A = transpose(cell2mat(cell_cent));
-%A = transpose(cell2mat(cell_surf));
-%hold on;
-%for i = 1:7
-%    plot(100*(A(:,i)-A(1,i))/A(1,i));
-%end
-%hold off;
 
 %**************************************************************************
 %**************************************************************************

@@ -6,7 +6,13 @@
 mdir = 'mesh3d/';
 fname = 'out_N4_p3-p2-p4';
 %
-iterations = 10; % number of smoothing iterations
+iterations = 1; % number of smoothing iterations
+
+%**************************************************************************
+path(path, '/home/users/jrugis/Downloads/toolbox_graph/toolbox_graph/');
+path(path, '/home/users/jrugis/Downloads/toolbox_graph/toolbox_graph/toolbox/');
+path(path, '/home/users/jrugis/Downloads/toolbox_graph/toolbox_graph/off/');
+clear options;
 
 %**************************************************************************
 % input from multi-cell mesh file
@@ -127,6 +133,7 @@ cell_edges = cell(ncells,1);           % mesh edges
 cell_vol = cell(ncells,iterations+1);  % volume 
 cell_surf = cell(ncells,iterations+1); % surface area
 cell_cent = cell(ncells,iterations+1); % centroid
+cell_curv = cell(ncells,iterations+1); % curvature
 for c = cells
     fprintf('separate cell: %d',c);
     temp = tris((tris(:,4) == c),1:3);
@@ -202,6 +209,14 @@ for i = 1:iterations
         cell_cent{c,i+1} = ccent;
         fprintf('    volume: %4.2f  surface area: %4.2f\n',...
             cell_vol{c,i+1},cell_surf{c,i+1});
+        
+        % compute and store the curvature
+        vertex = transpose(V);
+        faces = transpose(cell_tris{1});
+        options.curvature_smoothing = 0;
+        options.verb = 0;
+        [Umin,Umax,Cmin,Cmax,Cmean,Cgauss,Normal] = compute_curvature(vertex,faces,options);
+        cell_curv{c,i+1} = Cmean;
     end
     % seam smoothing
 end
