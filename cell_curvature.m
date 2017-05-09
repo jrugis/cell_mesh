@@ -31,30 +31,34 @@ for i = 1:size(fnames) % iterate through image stack
         temp(temp==v) = 1;
         temp(temp<1) = 0;
         bd = bwboundaries(temp);              % extract boundary curve
-        %if fnames(i).name=='cells_0030_16a.tif'
-        %    figure;
-        %    hold on;
-        %    scatter(bd{1}(:,1), bd{1}(:,2));
-        %end
+        if fnames(i).name=='cells_0030_16a.tif'
+            %figure;
+            %hold on;
+            %scatter(bd{1}(:,1), bd{1}(:,2));
+            name = int2str(floor(100*v));
+            csvwrite(strcat(mdir,'cell_boundary_',name,'.csv'), bd{1});
+        end
         X = sgolayfilt(bd{1}(:,1),5,35);   % smooth the boundary curve
         Y = sgolayfilt(bd{1}(:,2),5,35);
         K = -LineCurvature2D([X,Y]);       % curvatures, FLIP SIGN !!!
         ind = find(abs(cells-v) < 0.001);  % which cell?
         cell_curv{ind} = [cell_curv{ind};K];  
-        %if fnames(i).name=='cells_0030_16a.tif'
-        %    scatter(X,Y);
-        %end
+        if fnames(i).name=='cells_0030_16a.tif'
+            %scatter(X,Y);
+            name = int2str(floor(100*v));
+            csvwrite(strcat(mdir,'cell_boundary_smooth',name,'.csv'), {X,Y});
+        end
         %fprintf('%d %d %4.4f %4.4f\n',size(bd{1}),v,std(K));
         %fprintf('%d %4.4f %4.4f\n',ind,v,std(K));
     end
 end
-for i = (1:7)
-    c = cell_curv{i,:};
-    fprintf('%4.4f\n',std(c));
-    figure;
-    histogram(c,'Normalization','probability',...
-        'NumBins',100,'Binlimits',[-0.5,0.5]);
-end
+%for i = (1:7)
+%    c = cell_curv{i,:};
+%    fprintf('%4.4f\n',std(c));
+%    figure;
+%    histogram(c,'Normalization','probability',...
+%        'NumBins',100,'Binlimits',[-0.5,0.5]);
+%end
 
 
 

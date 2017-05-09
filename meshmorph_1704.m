@@ -6,7 +6,7 @@
 mdir = 'mesh3d/';
 fname = 'out_N4_p3-p2-p4';
 %
-iterations = 30;    % maximum number of smoothing iterations
+iterations = 100;    % maximum number of smoothing iterations
 curv_target = 1.0; % target curvature std ratio maximum
 
 %**************************************************************************
