@@ -52,16 +52,11 @@ for i = 1:size(fnames) % iterate through image stack
         %fprintf('%d %4.4f %4.4f\n',ind,v,std(K));
     end
 end
-%for i = (1:7)
-%    c = cell_curv{i,:};
-%    fprintf('%4.4f\n',std(c));
-%    figure;
-%    histogram(c,'Normalization','probability',...
-%        'NumBins',100,'Binlimits',[-0.5,0.5]);
-%end
-
-
-
-
-
-
+for i = (1:7)
+    c = cell_curv{i,:};
+    csvwrite(strcat(mdir,'cell',int2str(i),'_curv.csv'), c);
+    fprintf('%4.4f\n',std(c));
+    %figure;
+    %histogram(c,'Normalization','probability',...
+    %    'NumBins',100,'Binlimits',[-0.5,0.5]);
+end

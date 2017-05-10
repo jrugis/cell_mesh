@@ -203,11 +203,14 @@ for c = cells
         cell_curv_std{c,i} = std(cell_curv{c,i});
     end
 end
-csvwrite(strcat(mdir,'cell_curv.csv'), cell2mat(cell_curv_std));
+csvwrite(strcat(mdir,'cell_curv_std.csv'), cell2mat(cell_curv_std));
 
 %**************************************************************************
 % plot curvature histograms
-%for c = cells
+for c = cells
+    csvwrite(strcat(mdir,'cell',int2str(c),'_curv0.csv'),cell_curv{c,1});
+    csvwrite(strcat(mdir,'cell',int2str(c),'_curv',...
+        int2str(final_iteration),'.csv'),cell_curv{c,final_iteration+1});
 %    figure;
 %    hold on;
 %    histogram(cell_curv{c,1},'Normalization',...
@@ -215,5 +218,5 @@ csvwrite(strcat(mdir,'cell_curv.csv'), cell2mat(cell_curv_std));
 %    histogram(cell_curv{c,final_iteration+1},'Normalization',...
 %        'probability','NumBins',100,'Binlimits',[-0.5,0.5]);
 %    hold off;
-%end
+end
 %**************************************************************************
