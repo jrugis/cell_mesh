@@ -14,6 +14,7 @@ curv_target = 1.0; % target curvature std ratio maximum
 path(path, '~/Downloads/alecjacobson-gptoolbox-00c124c/mesh');
 path(path, '~/Downloads/geom3d/meshes3d');
 path(path, '~/Downloads/geom3d/geom3d');
+path(path, '~/Downloads/patch_curvature_version1b');
 path(path, '~/Downloads/unifyMeshNormals');
 path(path, '~/Downloads/smoothpatch_version1b');
 path(path, '~/Downloads/toolbox_graph/toolbox_graph/');
@@ -77,12 +78,19 @@ for c = cells
     [ccent,cell_vol{c,1}] = centroid(V,cell_tris{c});
     fprintf('    volume: %4.2f  surface area: %4.2f',...
         cell_vol{c,1},cell_surf{c,1});
+
     % compute and store the curvature
+
     options.curvature_smoothing = 0;
     options.verb = 0;
     [Umin,Umax,Cmin,Cmax,Cmean,Cgauss,Normal] = ...
         compute_curvature(transpose(V),...
         transpose(cell_tris{c}),options);
+
+    %figure('visible','off');
+    %FV = patch('Faces',cell_tris{c},'Vertices',V);
+    %Cmean,Cgaussian,Dir1,Dir2,Lambda1,Lambda2]=patchcurvature(FV); 
+
     cell_curv{c,1} = Cmean(unique(cell_tris{c}));
     fprintf('  curvature mean: %4.4f',mean(cell_curv{c,1}));
     fprintf('  curvature std: %4.4f\n',std(cell_curv{c,1}));

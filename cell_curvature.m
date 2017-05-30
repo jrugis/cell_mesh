@@ -31,6 +31,7 @@ for i = 1:size(fnames) % iterate through image stack
         temp(temp==v) = 1;
         temp(temp<1) = 0;
         bd = bwboundaries(temp);              % extract boundary curve
+        %bd = cellfun(@(x) x*0.0689,bd,'un',0); % scaling from 1024x1024
         if fnames(i).name=='cells_0030_16a.tif'
             %figure;
             %hold on;
@@ -58,5 +59,5 @@ for i = (1:7)
     fprintf('%4.4f\n',std(c));
     %figure;
     %histogram(c,'Normalization','probability',...
-    %    'NumBins',100,'Binlimits',[-0.5,0.5]);
+    %    'NumBins',30,'Binlimits',[-2,2]);
 end
