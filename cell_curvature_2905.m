@@ -81,29 +81,9 @@ for i = (1:7)
     end
     csvwrite(strcat(mdir,'cell',int2str(i),'_wght.csv'), w);
     fprintf('%4.4f\n',sqrt(var(c(2:end-1),w(2:end-1)))); % weighted std
-    %fprintf('%4.4f\n',std(c));                           % std
-    %fprintf('%4.4f\n',mean(c));
-    %histw = histwc(c(2:end-1),w(2:end-1),-2,2,30);
-    %figure;
-    %bar(histw);
-    %figure;
-    %histogram(c,'Normalization','probability',...
-    %   'NumBins',30,'Binlimits',[-2,2]);
-end
-
-%**************************************************************************
-%**************************************************************************
-% weighted histogram
-function [histw] = histwc(vv, ww, minV, maxV, nbins)
-  delta = (maxV-minV)/nbins;
-  vinterval = linspace(minV, maxV, nbins)-delta/2.0;
-  histw = zeros(nbins, 1);
-  for i=1:length(vv)
-    ind = find(vinterval < vv(i), 1, 'last' );
-    if ~isempty(ind)
-      histw(ind) = histw(ind) + ww(i);
-    end
-  end
+    figure;
+    histogram(c,'Normalization','probability',...  % NOT WEIGHTED!
+       'NumBins',20,'Binlimits',[-2,2]);
 end
 
 %**************************************************************************

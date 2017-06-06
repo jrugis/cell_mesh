@@ -81,19 +81,23 @@ for c = cells
 
     % compute and store the curvature
 
-    options.curvature_smoothing = 0;
-    options.verb = 0;
-    [Umin,Umax,Cmin,Cmax,Cmean,Cgauss,Normal] = ...
-        compute_curvature(transpose(V),...
-        transpose(cell_tris{c}),options);
+    %options.curvature_smoothing = 0;
+    %options.verb = 0;
+    %[Umin,Umax,Cmin,Cmax,Cmean,Cgauss,Normal] = ...
+    %    compute_curvature(transpose(V),...
+    %    transpose(cell_tris{c}),options);
 
     %figure('visible','off');
     %FV = patch('Faces',cell_tris{c},'Vertices',V);
-    %Cmean,Cgaussian,Dir1,Dir2,Lambda1,Lambda2]=patchcurvature(FV); 
-
-    cell_curv{c,1} = Cmean(unique(cell_tris{c}));
+    %[Cmean,Cgaussian,Dir1,Dir2,Lambda1,Lambda2]=patchcurvature(FV); 
+    %cell_curv{c,1} = Cmean(unique(cell_tris{c}));
+    
+    [CMean CWeight] = SurfaceCurvature(V,cell_edges{c},cell_tris{c});
+    cell_curv{c,1} = CMean(unique(cell_tris{c}));
+    
     fprintf('  curvature mean: %4.4f',mean(cell_curv{c,1}));
     fprintf('  curvature std: %4.4f\n',std(cell_curv{c,1}));
+    
     % check mesh Euler characteristic
     %if size(cell_curv{c,1})-size(cell_edges{c})+size(cell_tris{c}) == 2
     %    fprintf('ok\n');
@@ -166,10 +170,12 @@ for i = 1:iterations
             cell_vol{c,i+1},cell_surf{c,i+1});
 
         % compute and store the curvature
-        [Umin,Umax,Cmin,Cmax,Cmean,Cgauss,Normal] = ...
-            compute_curvature(transpose(V),...
-            transpose(cell_tris{c}),options);
-        cell_curv{c,i+1} = Cmean(unique(cell_tris{c}));
+        %[Umin,Umax,Cmin,Cmax,Cmean,Cgauss,Normal] = ...
+        %    compute_curvature(transpose(V),...
+        %    transpose(cell_tris{c}),options);
+        %cell_curv{c,i+1} = Cmean(unique(cell_tris{c}));
+        cell_curv{c,i+1} = SurfaceCurvature(V,cell_edges{c},cell_tris{c});
+
         fprintf('  curvature std: %4.4f\n',std(cell_curv{c,i+1}));
     end
     if done > ncells / 2;
@@ -230,3 +236,14 @@ for c = cells
 %    hold off;
 end
 %**************************************************************************
+%**************************************************************************
+%**************************************************************************
+%**************************************************************************
+
+
+
+
+
+
+
+
