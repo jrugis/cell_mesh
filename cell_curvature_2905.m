@@ -41,8 +41,8 @@ for i = 1:size(fnames) % iterate through image stack
             name = int2str(floor(100*v));
             csvwrite(strcat(mdir,'cell_boundary_',name,'.csv'), bd{1});
         end
-        X = sgolayfilt(bd{1}(:,1),3,21);   % smooth the boundary curve
-        Y = sgolayfilt(bd{1}(:,2),3,21);
+        X = sgolayfilt(bd{1}(:,1),3,51); % smooth the boundary curve
+        Y = sgolayfilt(bd{1}(:,2),3,51);
         K = -LineCurvature2D([X,Y]);   % curvatures, FLIP SIGN !!!
 
         ind = find(abs(cells-v) < 0.001);  % which cell?
@@ -68,8 +68,8 @@ for i = (1:7)
     c = cell_curv{i,1}{loc};               % curvature at each point      
     csvwrite(strcat(mdir,'cell',int2str(i),'_curv.csv'), c);
     p = cell_pnts{i,1}{loc};               % coordinates of each point
-    %figure;
-    %scatter(p(:,1),p(:,2));
+    figure;
+    scatter(p(:,1),p(:,2));
     csvwrite(strcat(mdir,'cell',int2str(i),'_pnts.csv'), p);
     l = zeros(size(c));                    % distance between points
     for j = (1:size(l)-1) % from lower index point
@@ -80,10 +80,12 @@ for i = (1:7)
         w(j) = 0.5*(l(j-1)+l(j));
     end
     csvwrite(strcat(mdir,'cell',int2str(i),'_wght.csv'), w);
-    fprintf('%4.4f\n',sqrt(var(c(2:end-1),w(2:end-1)))); % weighted std
-    figure;
-    histogram(c,'Normalization','probability',...  % NOT WEIGHTED!
-       'NumBins',20,'Binlimits',[-2,2]);
+    %fprintf('  mean: %4.4f',mean(c(2:end-1))); % mean
+    %fprintf('   std: %4.4f\n',sqrt(var(c(2:end-1),w(2:end-1)))); % weighted std
+    fprintf('%4.4f; ',sqrt(var(c(11:end-10),w(11:end-10)))); % weighted std
+    %figure;
+    %histogram(c,'Normalization','probability',...  % NOT WEIGHTED!
+    %   'NumBins',20,'Binlimits',[-2,2]);
 end
 
 %**************************************************************************

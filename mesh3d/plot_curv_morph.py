@@ -6,9 +6,9 @@ import numpy as np
 
 for i in range(1,8):
   fig,ax = plt.subplots()
-  ax.set_xlim([-0.5,0.5])
-  ax.set_ylim([0,25])
-  bins = np.linspace(-0.5,0.5,99)
+  ax.set_xlim([-2.0,2.0])
+  ax.set_ylim([0.0,3.5])
+  bins = np.linspace(-2.0,2.0,80)
 
   f = open('cell'+str(i)+'_curv0.csv','rb')
   d = csv.reader(f)
@@ -17,16 +17,34 @@ for i in range(1,8):
     vals.append(np.float(val[0]))
   f.close()
   vals = np.asarray(vals)
-  plt.hist(vals,bins,normed=True,color='#a07040',alpha=0.7,label='initial')
 
-  f = open('cell'+str(i)+'_curv10.csv','rb')
+  f = open('cell'+str(i)+'_wght0.csv','rb')
+  d = csv.reader(f)
+  wghts = []
+  for val in d:
+    wghts.append(np.float(val[0]))
+  f.close()
+  wghts = np.asarray(wghts)
+
+  plt.hist(vals,bins,normed=True,weights=wghts,color='#a07040',alpha=0.7,label='initial')
+
+  f = open('cell'+str(i)+'_curv9.csv','rb')
   d = csv.reader(f)
   vals = []
   for val in d:
     vals.append(np.float(val[0]))
   f.close()
   vals = np.asarray(vals)
-  plt.hist(vals,bins,normed=True,color='#0080ff',alpha=0.7,label='final')
+
+  f = open('cell'+str(i)+'_wght9.csv','rb')
+  d = csv.reader(f)
+  wghts = []
+  for val in d:
+    wghts.append(np.float(val[0]))
+  f.close()
+  wghts = np.asarray(wghts)
+
+  plt.hist(vals,bins,normed=True,weights=wghts,color='#0080ff',alpha=0.7,label='final')
 
   plt.rcParams.update({'font.size': 16})
   ax.legend(loc=1,prop={'size':14})

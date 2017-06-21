@@ -6,7 +6,7 @@
 mdir = 'mesh3d/';
 fname = 'out_N4_p3-p2-p4';
 %
-iterations = 100;    % maximum number of smoothing iterations
+iterations = 15;    % maximum number of smoothing iterations
 curv_target = 1.0; % target curvature std ratio maximum
 
 %**************************************************************************
@@ -94,7 +94,6 @@ for c = cells
     
     [CMean CWeight] = SurfaceCurvature(V,cell_edges{c},cell_tris{c});
     cell_curv{c,1} = CMean(unique(cell_tris{c}));
-    
     fprintf('  curvature mean: %4.4f',mean(cell_curv{c,1}));
     fprintf('  curvature std: %4.4f\n',std(cell_curv{c,1}));
     
@@ -103,7 +102,6 @@ for c = cells
     %    fprintf('ok\n');
     %end
 end
-return;
 
 %**************************************************************************
 % iterative smoothing
@@ -174,8 +172,11 @@ for i = 1:iterations
         %    compute_curvature(transpose(V),...
         %    transpose(cell_tris{c}),options);
         %cell_curv{c,i+1} = Cmean(unique(cell_tris{c}));
-        cell_curv{c,i+1} = SurfaceCurvature(V,cell_edges{c},cell_tris{c});
-
+        %cell_curv{c,i+1} = SurfaceCurvature(V,cell_edges{c},cell_tris{c});
+        %fprintf('  curvature std: %4.4f\n',std(cell_curv{c,i+1}));
+        [CMean CWeight] = SurfaceCurvature(V,cell_edges{c},cell_tris{c});
+        cell_curv{c,i+1} = CMean(unique(cell_tris{c}));
+        fprintf('  curvature mean: %4.4f',mean(cell_curv{c,i+1}));
         fprintf('  curvature std: %4.4f\n',std(cell_curv{c,i+1}));
     end
     if done > ncells / 2;

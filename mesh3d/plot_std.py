@@ -9,13 +9,7 @@ fname = 'cell_curv_std'
 plt.rcParams.update({'font.size': 16})
 fig, ax = plt.subplots()
 
-ref = [0.0412,
-       0.0538,
-       0.0432,
-       0.0491,
-       0.0555,
-       0.0602,
-       0.0544]
+ref = [0.2300, 0.3554, 0.3828, 0.2886, 0.6884, 0.3682, 0.4243]
 
 f = open(fname +'.csv','rb')
 d = csv.reader(f)

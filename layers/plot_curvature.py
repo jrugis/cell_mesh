@@ -23,13 +23,13 @@ for i in range(1,8):
 
   fig,ax = plt.subplots()
   ax.set_xlim([-2.0,2.0])
-  ax.set_ylim([0.0,1.0])
-  plt.hist(vals,bins=20,range=(-2.0,2.0),normed=True,weights=wghts,color='#0080ff',alpha=0.7)
+  ax.set_ylim([0.0,3.5])
+  plt.hist(vals,bins=80,range=(-2.0,2.0),normed=True,weights=wghts,color='#0080ff',alpha=0.7)
   plt.rcParams.update({'font.size': 16})
   plt.title('Cell'+str(i)+': image slice curvature distribution')
   plt.xlabel('curvature')
   plt.ylabel('normalised counts')
 
-  plt.show()
-  #plt.savefig('cell'+str(i)+'_curv.pdf')
+  #plt.show()
+  plt.savefig('cell'+str(i)+'_curv.pdf')
 

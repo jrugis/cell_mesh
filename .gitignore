@@ -1,5 +1,8 @@
 *~
 *.pyc
+*.m
+layers/*.csv
+mesh3d/*.csv
 both.tif
 *.mesh
 *.msh

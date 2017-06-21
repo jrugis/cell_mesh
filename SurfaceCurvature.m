@@ -1,4 +1,4 @@
-function [CMean CWeight] = SurfaceCurvature(V,E,F)
+function [CMean CWeight] = SurfaceCurvature(V,E,F,Vi)
 sz = size(V,1);
 CMean = zeros(sz,1);
 CWeight = zeros(sz,1);
@@ -8,7 +8,8 @@ edgeFaces = trimeshEdgeFaces(V,E,F);
 edgeAngles = edgeDihedral(V,F,faceNormals,edgeFaces);
 edgeLengths = meshEdgeLength(V,E,F);
 faceAreas = triangleArea3d([V(F(:,1),:)], [V(F(:,2),:)], [V(F(:,3),:)]);
-usedVertices = unique(F);      % list of vertex indices
+%usedVertices = unique(F);      % list of vertex indices
+usedVertices = Vi;
 
 for i = (1:size(usedVertices,1))
     [row col] = find(F==usedVertices(i));
