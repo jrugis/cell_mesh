@@ -21,7 +21,7 @@ make
 
 **********************************************
 **********************************************
-WORKFLOW
+MAIN WORKFLOW
 ***************
 photoshop: create segmented layers, export segmented layers as files
   cells.psd <- images
@@ -46,10 +46,15 @@ python: convert tiff stack to inr format
   -> mesh3d/cellsx.inr
 
 CGAL: create mesh with (or without) constraints
+
+  (edge size, facet size, facet distance, cell size) 
   ~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image_with_features mesh3d/cells8.inr geometry/cellsN8R_poly.txt 0.6 0.6 0.4 0.8
-      <- mesh3d/cells.inr, geometry/polylines.txt 
+      <- mesh3d/cells.inr, geometry/polylines.txt
+
+  (facet size, facet distance, cell size) 
   ~/Downloads/CGAL-4.9/examples/Mesh_3/mesh_3D_image mesh3d/cells8.inr 0.6 0.4 0.8
       <- mesh3d/cellsx.inr
+
   -> out.mesh 
 
 medit: view the mesh
@@ -74,7 +79,29 @@ gmsh: 3D mesh the msh files
 python: add dns to msh files
   python label_tubes_in_cells.py <- tubes.msh
   -> out_N4_p3-p2-p4-xtet.msh
-  
+
+**********************************************
+**********************************************
+2D CURVATURE EXTRACTION WORKFLOW
+********************************
+matlab: compute 2D line curvature and standard deviation of great arc for each cell
+   matlab cell_curvature_2905.m <- layers/cells_*a.tif
+   -> list: curvature standard deviation for each cell
+   -> layers/cellx_pnts.csv
+   -> layers/cell_boundary_smoothx.csv
+   -> layers/cellx_curv.csv
+   -> layers/cellx_pnts.weight
+
+python: plot outline (original and smoothed)
+  python plot_outline.py <- layers/cellx_pnts.csv
+                         <- layers/cell_boundary_smoothx.csv
+  -> outline.pdf
+
+python: plot normaized curvature histogram
+  python plot_curvature.py <- layers/cellx_curv.csv
+                           <- layers/cellx_pnts.weight
+  -> layers/cellx_curv.pdf
+
 **********************************************
 **********************************************
 TESTING

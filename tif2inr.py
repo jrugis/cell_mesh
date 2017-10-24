@@ -4,8 +4,8 @@ import numpy as np
 
 fdir = "layers/"
 ##fname = "cellsN"
-#fname = "cellsN8R"
-fname = "cellsN4R"
+fname = "cellsN8R"
+#fname = "cellsN4R"
 mdir = "mesh3d/"
 ##mname = "cells.inr"
 #mname = "cells8.inr"

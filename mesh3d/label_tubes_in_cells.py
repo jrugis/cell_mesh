@@ -10,7 +10,7 @@ import numpy as np
 
 for p in range(1,8):
   cfname = "out_N4_p3-p2-p4-" + str(p) + "tet.msh"
-  tfname = "tubes.msh"
+  tfname = "tubes_20c.msh"
   print cfname, tfname
 
   # read in tubes coordinates

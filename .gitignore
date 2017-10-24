@@ -1,12 +1,12 @@
 *~
 *.pyc
 *.m
-layers/*.csv
-mesh3d/*.csv
+*.csv
 both.tif
 *.mesh
 *.msh
 *.jpg
+*.vtu
 smoothpatch*
 stlread*
 tubes.stl
