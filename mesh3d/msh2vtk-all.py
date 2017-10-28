@@ -22,7 +22,8 @@ def convert_mesh(fname):
 
   # get "distance to nearest lumen" data
   for line in f1: 
-    if line.startswith('"distance to nearest lumen"'): break
+    #if line.startswith('"distance to nearest lumen"'): break
+    if line.startswith('"nearest cell number"'): break
   for t in range(6): # skip 6 lines
     f1.next()
   dnl = np.empty(pcount)
@@ -34,7 +35,7 @@ def convert_mesh(fname):
 
   # write out to vtk file
   d = {}
-  d["dnl"] = dnl
+  d["ncn"] = dnl
   print xyz[0,:].shape
   print dnl.shape
   pointsToVTK(fname, xyz[0,:], xyz[1,:], xyz[2,:], data = d) # write out vtk file
@@ -43,7 +44,8 @@ def convert_mesh(fname):
 # main program
 ##################################################################
 
-mesh_names = subprocess.check_output("ls *tet.msh", shell=True).split()
+#mesh_names = subprocess.check_output("ls *tet.msh", shell=True).split()
+mesh_names = subprocess.check_output("ls *20c.msh", shell=True).split()
 for mesh in mesh_names:
   fname = mesh.split('.')[0]
   print fname
