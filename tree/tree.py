@@ -3,28 +3,33 @@
 # J. Rugis
 # 13.11.17
 #
+# input file "tree.dat" from blender "model_20d.blend"
+# output file "tree.txt" contains vertices, lines, cell counts per line
+# output file "tree.vtu" for checking with paraview
+#
 ###########################################################################
 
 import math
 import numpy as np
+from evtk.hl import pointsToVTK
 
 ###########################################################################
 # functions
 ###########################################################################
-def getDistQ(A, B, P):
+def getDistQ(A, B, P): # get distance from point P to line segment AB
   AB = B-A
   AP = P-A
   dAP = np.linalg.norm(AP)
   if dAP > 5.0: return 100.0 # cull (too far away)
-  AQ = (np.dot(AB, AP)) * AB / (AB**2).sum()
-  Q = AQ + A
+  AQ = (np.dot(AB, AP)) * AB / (AB**2).sum() 
+  Q = AQ + A                 # QP is perpendicular to line AB
   d2AQ = (AQ**2).sum()
   d2BQ = ((Q-B)**2).sum()
   d2AB = (AB**2).sum()
-  if((d2AQ > d2AB) or (d2BQ > d2AB)):
-    d = min(dAP, np.linalg.norm(P-B))
+  if((d2AQ > d2AB) or (d2BQ > d2AB)): # Q not on segment AB?
+    d = min(dAP, np.linalg.norm(P-B)) # use distance to A or B
   else:
-    d = np.linalg.norm(P-Q)
+    d = np.linalg.norm(P-Q)           # use perpendicular distance
   return d
 
 ###########################################################################
@@ -41,26 +46,26 @@ def getCloseSeg(tv, tl, P):
 ###########################################################################
 def getCellCounts(tv, tl, sn): # tverts, tlines, snodes
   cc = np.zeros([len(tl), 8]) # counts for each of seven cells per line
-  for p in sn[0]:
-    i = getCloseSeg(tv, tl, p[0:3])
-    cc[i, int(p[3])] += 1.0 # add cell count to line
-  return cc  
+  nl = np.zeros(len(sn[0]))
+  for i, p in enumerate(sn[0]):
+    j = getCloseSeg(tv, tl, p[0:3])
+    cc[j, int(p[3])] += 1.0 # add cell count to line
+    nl[i] = j + 1
+  return cc, nl  
 
 ###########################################################################
 def getSurfNodes(): # get idealised lumen surface nodes
   f = open("tubes_20c.msh", 'r') # open the mesh file
 
-  # get the mesh coordinates
-  for line in f: 
+  for line in f: # get the node coordinates
     if line.startswith("$Nodes"): break
   n = int(f.next())
   xyz = np.zeros([n, 5])
-  for t in range(n): # get the node coordinates
+  for t in range(n):
     v = f.next().split()
     xyz[t,0:3] = map(float, v[1:4])
 
-  # get the surface nodes
-  for line in f: 
+  for line in f:   # get the surface nodes
     if line.startswith("$Elements"): break
   n = int(f.next())
   for t in range(n): # identify the surface nodes
@@ -71,8 +76,7 @@ def getSurfNodes(): # get idealised lumen surface nodes
     else: break
   mk = np.where(xyz[:,4]==1.0) # surface vertex indices
 
-  # get the nodes cell label
-  for line in f: 
+  for line in f: # get the nodes cell label
     if line.startswith('"nearest cell number"'): break
   for t in range(5): f.next()
   n = int(f.next())
@@ -100,7 +104,7 @@ def euler2rotation(t):
 ###########################################################################
 # get index of closest vert to point
 def getiVert(p, vs): # point, vertices
-  d = 100.0 # lowest distance
+  d = 100.0 # lowest distance dummy value
   for i, v in enumerate(vs):
     nd = np.linalg.norm(p - v)
     if(nd < d): # lower distance?
@@ -118,7 +122,7 @@ def getVertsLines():
   for i in range(n): # verticies
     vals = map(float, f.next().split()[0:4])
     v[i] = vals[0:3]
-    if(vals[3] >= 0.05): # the lumen exit vertex
+    if(vals[3] >= 0.05): # the lumen exit vertex, HARD CODED!!!
       xv = i+1
   n = int(f.next()) # line count
   l = np.empty((n, 2), dtype=np.int)
@@ -134,6 +138,35 @@ def getVertsLines():
   return xv, v, l # return (exit vertex index, verticies, lines)
 
 ###########################################################################
+def saveVtk(v, nln):
+  v = np.transpose(v)
+  x = np.array(v[0,:]) # deep copy required
+  y = np.array(v[1,:])
+  z = np.array(v[2,:])
+  ncn = np.array(v[3,:])
+  d = {}
+  d["ncn"] = ncn  # nearest cell number
+  d["nln"] = nln  # nearest line number
+  pointsToVTK("./tree", x, y, z, data = d) # write out vtk file
+  return
+
+###########################################################################
+def saveTree(tv, tl, cc):
+  f = open("tree.txt", 'w')
+  f.write("%d %d (vertices, exit vertex)\n" % (len(tverts), txvert))
+  for v in tv:
+    f.write("%5.3f %5.3f %5.3f\n" % (v[0], v[1], v[2]))
+  f.write("%d (lines)\n" % len(tlines))
+  for v in tl:
+    f.write("%d %d\n" % (v[0], v[1]))
+  f.write("%d (cell counts per line)\n" % len(tlines))
+  for v in cc:
+    f.write("%d %d %d %d %d %d %d %d\n" %\
+      (v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7]))
+  f.close()
+  return
+
+###########################################################################
 # main program
 ###########################################################################
 
@@ -143,23 +176,14 @@ txvert, tverts, tlines = getVertsLines()
 print "get lumen surface nodes"
 snodes = getSurfNodes()
 
-print "get tree cell counts"
-cellcnts = getCellCounts(tverts, tlines, snodes)
+print "get tree cell counts and node lines"
+cellcnts, nlines = getCellCounts(tverts, tlines, snodes)
 
-print "saving tree"
-f = open("tree.txt", 'w')
-f.write("%d %d (vertices, exit vertex)\n" % (len(tverts), txvert))
-for v in tverts:
-  f.write("%5.3f %5.3f %5.3f\n" % (v[0], v[1], v[2]))
-f.write("%d (lines)\n" % len(tlines))
-for v in tlines:
-  f.write("%d %d\n" % (v[0], v[1]))
-f.write("%d (cell counts per line)\n" % len(tlines))
-for v in cellcnts:
-  f.write("%d %d %d %d %d %d %d %d\n" %\
-    (v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7]))
-f.close()
+print "save tree"
+saveTree(tverts, tlines, cellcnts)
 
+print "save vtk file"
+saveVtk(snodes[0], nlines)
 
 ###########################################################################
 

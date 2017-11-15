@@ -35,7 +35,7 @@ def convert_mesh(fname):
 
   # write out to vtk file
   d = {}
-  d["ncn"] = dnl
+  #d["ncn"] = dnl
   print xyz[0,:].shape
   print dnl.shape
   pointsToVTK(fname, xyz[0,:], xyz[1,:], xyz[2,:], data = d) # write out vtk file
